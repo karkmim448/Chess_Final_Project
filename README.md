@@ -16,7 +16,7 @@
  > ## Phase II
  
 ## Class Diagram
-![image](https://user-images.githubusercontent.com/51354509/140862885-182a5b52-494a-409e-b13b-84b455e49aa1.png)
+![image](https://user-images.githubusercontent.com/51354509/140863935-90d679ea-f794-421a-af6d-4ed8ddb1bc54.png)
 
 Link:
 https://lucid.app/lucidchart/ea02bd3d-c8e0-4026-8497-5b377b4eb6fd/edit?viewport_loc=354%2C782%2C3882%2C2089%2CHWEp-vi-RSFO&invitationId=inv_7ed6851d-aafa-4f09-bf35-9f2f46e8d252
