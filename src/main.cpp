@@ -1,4 +1,4 @@
-#include <../SFML/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(400, 400), "Testing SFML");
@@ -7,7 +7,7 @@ int main() {
     shape.setFillColor(sf::Color::Green);
 
     while(window.isOpen()){
-        sfEvent event;
+	sf::Event event;
 
 	while(window.pollEvent(event)){
             if(event.type == sf::Event::Closed){
