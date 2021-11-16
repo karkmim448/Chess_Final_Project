@@ -1,7 +1,7 @@
 #ifndef __SPECIALMOVE_HPP__
 #define __SPECIALMOVE_HPP__
 
-#include "piece.hpp"
+#include "../../src/pieces/piece.hpp"
 
 class specialmove : Public piece{
 
