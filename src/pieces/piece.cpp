@@ -1,4 +1,4 @@
-#include "piece.hpp"
+#include "../../src/pieces/piece.hpp"
 #include <string>
 
 
