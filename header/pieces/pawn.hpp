@@ -1,9 +1,9 @@
 #ifndef __PAWN_HPP__
 #define __PAWN_HPP__
 
-#include "../../src/pieces/specialmove.hpp"
+#include "../../header/pieces/specialmove.hpp"
 
-class pawn : Public specialmove{
+class pawn : public specialmove{
 
 public:
 	bool _hasMoved;

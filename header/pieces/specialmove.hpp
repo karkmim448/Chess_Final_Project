@@ -1,9 +1,9 @@
 #ifndef __SPECIALMOVE_HPP__
 #define __SPECIALMOVE_HPP__
 
-#include "../../src/pieces/piece.hpp"
+#include "../../header/pieces/piece.hpp"
 
-class specialmove : Public piece{
+class specialmove : public piece{
 
 public:
 	bool _hasMoved;
