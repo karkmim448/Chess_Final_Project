@@ -5,9 +5,10 @@
 
 class Square{
   private:
-    piece* _piece;
     bool _color;
   public:
+    piece* piece;
+    piece* getPiece();
     bool getCurrentColor();
     bool getPieceColor();
     void replacePiece(int newX, int newY);

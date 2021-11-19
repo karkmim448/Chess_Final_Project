@@ -8,12 +8,13 @@
 #include <fstream>
 #include "PieceFactory.hpp"
 
-class Game : Square {
+class Game{
   protected:
     PieceFactory *factory;
     Square **board[8][8];
   public:
     Game();
+    Square** getBoard();
     void DrawBoard(std::string fileName);
 
 };

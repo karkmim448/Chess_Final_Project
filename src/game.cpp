@@ -48,6 +48,9 @@ Game::Game(){
 			
 	}
 }
+Square** Game::getBoard(){
+	return board;
+}
 
 void DrawBoard(string filename){};
 
