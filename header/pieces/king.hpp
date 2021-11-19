@@ -5,13 +5,13 @@
 
 class king : public specialmove{
 
-        public:
-                bool castleCheck();
+public:
+        bool castleCheck();
 
-                bool _hasMoved;
-		bool _inCheck;	
-	
-    king(std::pair<int, int> pos=std::make_pair(0,0));
+        bool _hasMoved;
+        bool _inCheck;	
+
+        king(std::pair<int, int> pos=std::make_pair(0,0));
     bool getColor();
     std::string getIcon();
     void setColor(bool);

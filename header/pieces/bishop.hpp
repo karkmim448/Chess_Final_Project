@@ -4,7 +4,7 @@
 #include "../../header/pieces/piece.hpp"
 
 class bishop : public piece{
-
+public:
     bishop(std::pair<int, int> pos=std::make_pair(0,0));
 
     bool getColor();
