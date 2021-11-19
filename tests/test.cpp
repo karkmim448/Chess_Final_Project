@@ -35,7 +35,7 @@ TEST(GAME_TEST, DEFAULT_CONSTRUCTOR){
     }
 }
 
-    
+
 // TEST(KNIGHT_TEST, MOVE){
 //     piece ***testBoard = new piece**[8];
 //     for(int i = 0; i < 8; i++){
@@ -95,3 +95,4 @@ int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
+
