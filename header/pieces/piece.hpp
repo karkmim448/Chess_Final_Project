@@ -8,13 +8,13 @@ private:
 	bool _color;
 	bool _icon;
 public:
-	bool getColor();
-	std::string getIcon();
-	void setColor(bool);
-	void setIcon(std::string);
-	virtual void move(startingSquare, endingSquare)=0;
-	virtual void moveCheck(startingSquare)=0;
-	virtual void capture(startingSquare, endingSquare)=0;
+	virtual bool getColor()=0;
+	virtual std::string getIcon()=0;
+	virtual void setColor(bool)=0;
+	virtual void setIcon(std::string)=0;
+	virtual bool moveCheck(std::pair<int, int> endingSquare)=0;
+	virtual void getPossibleMoves() = 0;
+
 };
 
 #endif
