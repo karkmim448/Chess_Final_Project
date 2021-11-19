@@ -4,6 +4,7 @@
 #include "../../header/pieces/piece.hpp"
 
 class queen : public piece{
+public:
     queen(std::pair<int, int> pos=std::make_pair(0,0));
 
     bool getColor();

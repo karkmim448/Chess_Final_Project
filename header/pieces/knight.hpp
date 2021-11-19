@@ -4,7 +4,7 @@
 #include "../../header/pieces/piece.hpp"
 
 class knight : public piece{
-
+public:
     knight(std::pair<int, int> pos=std::make_pair(0,0));
     bool getColor();
     std::string getIcon();
