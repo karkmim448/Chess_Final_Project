@@ -6,22 +6,38 @@
 #include "../header/pieces/king.hpp"
 #include "../header/pieces/queen.hpp"
 
+
 WhitePieceFactory::WhitePieceFactory(){}
 
-piece* WhitePieceFactory::DrawPawn(std::pair<int, int> pos){
-    return new pawn(pos);
+piece* WhitePieceFactory::DrawPawn(std::pair<int, int> pos, Game* g ){
+    pawn* p = new pawn(pos, Game* g );
+    p->setColor(true);
+    return p;
 }
-piece* WhitePieceFactory::DrawRook(std::pair<int, int> pos){
-    return new rook(pos);
+piece* WhitePieceFactory::DrawRook(std::pair<int, int> pos, Game* g ){
+    rook* p = new rook(pos, Game* g );
+    p->setColor(true);
+    return p;
 }
-piece* WhitePieceFactory::DrawKing(std::pair<int, int> pos){
-    return new king(pos);
+piece* WhitePieceFactory::DrawKing(std::pair<int, int> pos, Game* g ){
+    king* p = new king(pos, Game* g );
+    p->setColor(true);
+    return p;
 }
-piece*  WhitePieceFactory::DrawKnight(std::pair<int, int> pos){
-    return new knight(pos);
+piece*  WhitePieceFactory::DrawKnight(std::pair<int, int> pos, Game* g ){
+    knight* p = new knight(pos, Game* g );
+    p->setColor(true);
+    return p;
 }
-piece* WhitePieceFactory::DrawBishop(std::pair<int, int> pos){
-    return new bishop(pos);
+piece* WhitePieceFactory::DrawBishop(std::pair<int, int> pos, Game* g ){
+    bishop* p = new bishop(pos, Game* g );
+    p->setColor(true);
+    return p;
+}
+piece* WhitePieceFactory::DrawQueen(std::pair<int, int> pos, Game* g ){
+    queen* p = new queen(pos, Game* g );
+    p->setColor(true);
+    return p;
 }
 
 

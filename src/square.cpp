@@ -1,3 +1,4 @@
+
 #include "../header/square.hpp"
 
 Square::Square(): _color(0), _highlighted(0), _piece(0) {}
