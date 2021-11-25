@@ -6,7 +6,7 @@
 class Square{
   private:
     /* 
-      -True = White, False = Black
+      -True = light, False = dark
       -Used by gui to determine square color, static after construction, never should be changed 
     */
     bool _color;
