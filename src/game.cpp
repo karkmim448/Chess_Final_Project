@@ -26,7 +26,7 @@ Game::Game(std::string fileName){
 
                 /*
                     -If j is even, square is dark
-                    -If j is odd, square i slight
+                    -If j is odd, square is light
                 */
                 if(j % 2){
 
@@ -43,15 +43,15 @@ Game::Game(std::string fileName){
                 fin >> temp;
 
                 /*
-                    -If j is even, square is dark
-                    -If j is odd, square is light
+                    -If j is even, square is light
+                    -If j is odd, square is dark
                 */
                 if(j % 2){
 
                 }
 
                 else{
-                    
+
                 }
             }
         }
