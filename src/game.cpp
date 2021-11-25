@@ -1,4 +1,4 @@
-#include "../header/game.hpp"
+#include "game.hpp"
 
 Game::Game(): _playerTurn(1), _mostRecentEndingSquare(0), _mostRecentStartingSquare(0), _undoMovePieceStorage(0){
     for(int i = 0; i < 8; i++){
@@ -9,46 +9,172 @@ Game::Game(): _playerTurn(1), _mostRecentEndingSquare(0), _mostRecentStartingSqu
 }
 
 Game::Game(std::string fileName){
-    std::string temp = "";
-    bool temp = true; //holds color of square, alternated whenever a square is created
+    std::fstream fin; //extracts input from file to be used for piece creation
+    std::string fileInput = "";  //stores input from fin to be used to parse piece storage for piece creation
 
+    bool squareColor = true; //holds color of square, alternated whenever a square is created
+    std::pair<int, int> temp2; //holds position to be fed to piece factories
+    int fileRow, fileColumn; //used by fin to build pairs for undoStorage variables
+                             //fileRow is also used as the temp variable for single integer variables by fin
 
+    WhitePieceFactory whiteFactory; //white piece factory used to generate all white pieces
+    BlackPieceFactory blackFactory; //black piece factory used to generate all black pieces
+
+    //file name is either "../Save/Default.txt" or "../Save/Save.txt"
+    fin.open(fileName);
+    
+    //iterates through each row in board
     for(int i = 0; i < 8; i++){
 
+        //iterates through each column in each row of board
         for(int j = 0; j < 8; j++){
+            //fin should be iterating through the 8x8 grid of pieces stored in Savestates
+            fin >> fileInput;
 
-            /*
-                -If j is even, square is dark
-                -If j is odd, square is light
-            */
-            if(j % 2 == 1){
-                if(temp.at(0) == '+'){
+            //make the position based on i and j values, i is row, j is column
+            temp2 = std::make_pair(i, j);
 
+            //check what color the piece is as well as if there is even a piece there
+            if(fileInput.at(0) == '+'){ //white piece branch
+                //check what piece is at this position, build the square using said piece
+                if(fileInput.at(1) == 'p'){
+                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawPawn(temp2));
                 }
 
-                else if(temp.at(0) == '-'){
-
+                else if(fileInput.at(1) == 'r'){
+                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawRook(temp2));
                 }
 
-                else{
+                else if(fileInput.at(1) == 'h'){
+                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawKnight(temp2));
+                }
 
+                else if(fileInput.at(1) == 'b'){
+                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawBishop(temp2));
+                }
+
+                else if(fileInput.at(1) == 'q'){
+                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawQueen(temp2));
+                }
+
+                else if(fileInput.at(1) == 'k'){
+                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawKing(temp2));
                 }
             }
 
-            else{
-                if(temp.at(0) == '+'){
-
+            else if(fileInput.at(0) == '-'){ //black piece branch
+                //check what piece is at this position, build the square using said piece
+                if(fileInput.at(1) == 'p'){
+                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawPawn(temp2));
                 }
 
-                else if(temp.at(0) == '-'){
-
+                else if(fileInput.at(1) == 'r'){
+                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawRook(temp2));
                 }
 
-                else{
-                        
+                else if(fileInput.at(1) == 'h'){
+                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawKnight(temp2));
+                }
+
+                else if(fileInput.at(1) == 'b'){
+                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawBishop(temp2));
+                }
+
+                else if(fileInput.at(1) == 'q'){
+                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawQueen(temp2));
+                }
+
+                else if(fileInput.at(1) == 'k'){
+                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawKing(temp2));
                 }
             }
+
+            else{   //empty square branch
+                this->_board[i][j] = new Square(squareColor);
+            }
+
+            //swap Square color in order to build the alternating tiles
+            squareColor = !squareColor;
         }
+    }
+    //at this point fin should be done with the board state grid, now work on other member variables
+    
+    //read in player turn and set it
+    fin >> fileRow;
+    this->_playerTurn = fileRow;
+
+    //read in mostRecentStartingSquare and set it
+    fin >> fileRow;
+    fin >> fileColumn;
+
+    this->_mostRecentStartingSquare = &std::make_pair(fileRow, fileColumn);
+
+    //read in mostRecentEndingSquare and set it
+    fin >> fileRow;
+    fin >> fileColumn;
+
+    this->_mostRecentEndingSquare = &std::make_pair(fileRow, fileColumn);
+
+    //read in most undoMovePieceStorage and set it
+    fin >>fileInput;
+
+    //repeat for loop logic, but only got through it once
+    temp2 = std::make_pair(fileRow, fileColumn);
+
+    if(fileInput.at(0) == '+'){
+        if(fileInput.at(1) == 'p'){
+            this->_undoMovePieceStorage = whiteFactory.DrawPawn(temp2);
+        }
+
+        else if(fileInput.at(1) == 'r'){
+            this->_undoMovePieceStorage = whiteFactory.DrawRook(temp2);
+        }
+
+        else if(fileInput.at(1) == 'h'){
+            this->_undoMovePieceStorage = whiteFactory.DrawKnight(temp2);
+        }
+
+        else if(fileInput.at(1) == 'b'){
+            this->_undoMovePieceStorage = whiteFactory.DrawBishop(temp2);
+        }
+
+        else if(fileInput.at(1) == 'q'){
+            this->_undoMovePieceStorage = whiteFactory.DrawQueen(temp2);
+        }
+
+        else if(fileInput.at(1) == 'k'){
+            this->_undoMovePieceStorage = whiteFactory.DrawKing(temp2);
+        }
+    }
+
+    else if(fileInput.at(0) == '-'){
+        if(fileInput.at(1) == 'p'){
+            this->_undoMovePieceStorage = blackFactory.DrawPawn(temp2);
+        }
+
+        else if(fileInput.at(1) == 'r'){
+            this->_undoMovePieceStorage = blackFactory.DrawRook(temp2);
+        }
+
+        else if(fileInput.at(1) == 'h'){
+            this->_undoMovePieceStorage = blackFactory.DrawKnight(temp2);
+        }
+
+        else if(fileInput.at(1) == 'b'){
+            this->_undoMovePieceStorage = blackFactory.DrawBishop(temp2);
+        }
+
+        else if(fileInput.at(1) == 'q'){
+            this->_undoMovePieceStorage = blackFactory.DrawQueen(temp2);
+        }
+
+        else if(fileInput.at(1) == 'k'){
+            this->_undoMovePieceStorage = blackFactory.DrawKing(temp2);
+        }
+    }
+
+    else{
+        this->_undoMovePieceStorage = nullptr;
     }
 }
 

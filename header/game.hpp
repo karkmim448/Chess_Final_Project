@@ -21,7 +21,7 @@ class Game{
         -_highlight when a piece is selected but has notmoved yet and then again after the piece has moved.
         -_piece whenever a piece moves
     */
-    Square *_board[8][8];
+    Square* _board[8][8];
 
     /*
       -True means white can move, False means black can move
