@@ -4,7 +4,9 @@ SET(CMAKE_CXX_STANDARD 11)
 
 ADD_SUBDIRECTORY(googletest)
 
-ADD_SUBDIRECTORY(SFML)
+#ADD_SUBDIRECTORY(SFML)
+
+ADD_EXECUTABLE(test tests/test.cpp src/WhitePieceFactory.cpp src/BlackPieceFactory.cpp src/pieces/pawn.cpp src/pieces/rook.cpp src/pieces/bishop.cpp src/pieces/knight.cpp src/pieces/king.cpp src/pieces/queen.cpp)
 
 TARGET_LINK_LIBRARIES(test gtest)
 TARGET_COMPILE_DEFINITIONS(test PRIVATE gtest_disable_pthreads=ON)
