@@ -8,6 +8,7 @@
 
 class WhitePieceFactory: public PieceFactory{
 public:
+
 	WhitePieceFactory();
 	piece* DrawPawn(std::pair<int, int>, Game*);
 	piece* DrawRook(std::pair<int, int>, Game*);

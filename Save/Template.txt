@@ -1,0 +1,30 @@
+8 rows for pieces
+each row will have 8 letter combinations
+positive = white
+negative = black
+0 = empty
+r = rook
+h = knight
+b = bishop
+q = queen
+k = king
+p = pawn
+
+after board state, number to indicate which player's turn it is
+1 = white
+0 = black
+
+after player turn, two numbers to indicate mostRecentStartingSquare pair position
+
+after mostRecentStartingSquare, two numbers to indicate mostRecentEndingSquare pair position
+
+after mostRecentEndingSquare, letter combination to indicate piece stored in undoMovePieceStorage
+positive = white
+negative = black
+0 = empty
+r = rook
+h = knight
+b = bishop
+q = queen
+k = king
+p = pawn

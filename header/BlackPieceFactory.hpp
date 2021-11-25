@@ -8,6 +8,7 @@
 
 class BlackPieceFactory: public PieceFactory{
 public:
+
 	BlackPieceFactory();
 
 	piece* DrawPawn(std::pair<int, int> pos, Game*);
@@ -16,6 +17,7 @@ public:
 	piece*  DrawKnight(std::pair<int, int> pos, Game*);
 	piece* DrawBishop(std::pair<int, int> pos, Game*);
 	piece* DrawQueen(std::pair<int, int> pos, Game*);
+
 
 };
 
