@@ -6,8 +6,9 @@
 class Square{
   private:
     bool _color;
+    piece* _piece;
   public:
-    piece* piece;
+  
     piece* getPiece();
     bool getCurrentColor();
     bool getPieceColor();
