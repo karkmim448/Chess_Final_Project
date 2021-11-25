@@ -38,54 +38,54 @@ Game::Game(std::string fileName){
             if(fileInput.at(0) == '+'){ //white piece branch
                 //check what piece is at this position, build the square using said piece
                 if(fileInput.at(1) == 'p'){
-                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawPawn(temp2));
+                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawPawn(temp2, this));
                 }
 
                 else if(fileInput.at(1) == 'r'){
-                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawRook(temp2));
+                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawRook(temp2, this));
                 }
 
                 else if(fileInput.at(1) == 'h'){
-                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawKnight(temp2));
+                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawKnight(temp2, this));
                 }
 
                 else if(fileInput.at(1) == 'b'){
-                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawBishop(temp2));
+                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawBishop(temp2, this));
                 }
 
                 else if(fileInput.at(1) == 'q'){
-                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawQueen(temp2));
+                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawQueen(temp2, this));
                 }
 
                 else if(fileInput.at(1) == 'k'){
-                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawKing(temp2));
+                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawKing(temp2, this));
                 }
             }
 
             else if(fileInput.at(0) == '-'){ //black piece branch
                 //check what piece is at this position, build the square using said piece
                 if(fileInput.at(1) == 'p'){
-                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawPawn(temp2));
+                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawPawn(temp2, this));
                 }
 
                 else if(fileInput.at(1) == 'r'){
-                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawRook(temp2));
+                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawRook(temp2, this));
                 }
 
                 else if(fileInput.at(1) == 'h'){
-                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawKnight(temp2));
+                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawKnight(temp2, this));
                 }
 
                 else if(fileInput.at(1) == 'b'){
-                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawBishop(temp2));
+                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawBishop(temp2, this));
                 }
 
                 else if(fileInput.at(1) == 'q'){
-                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawQueen(temp2));
+                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawQueen(temp2, this));
                 }
 
                 else if(fileInput.at(1) == 'k'){
-                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawKing(temp2));
+                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawKing(temp2, this));
                 }
             }
 
@@ -123,53 +123,53 @@ Game::Game(std::string fileName){
 
     if(fileInput.at(0) == '+'){
         if(fileInput.at(1) == 'p'){
-            this->_undoMovePieceStorage = whiteFactory.DrawPawn(temp2);
+            this->_undoMovePieceStorage = whiteFactory.DrawPawn(temp2, this);
         }
 
         else if(fileInput.at(1) == 'r'){
-            this->_undoMovePieceStorage = whiteFactory.DrawRook(temp2);
+            this->_undoMovePieceStorage = whiteFactory.DrawRook(temp2, this);
         }
 
         else if(fileInput.at(1) == 'h'){
-            this->_undoMovePieceStorage = whiteFactory.DrawKnight(temp2);
+            this->_undoMovePieceStorage = whiteFactory.DrawKnight(temp2, this);
         }
 
         else if(fileInput.at(1) == 'b'){
-            this->_undoMovePieceStorage = whiteFactory.DrawBishop(temp2);
+            this->_undoMovePieceStorage = whiteFactory.DrawBishop(temp2, this);
         }
 
         else if(fileInput.at(1) == 'q'){
-            this->_undoMovePieceStorage = whiteFactory.DrawQueen(temp2);
+            this->_undoMovePieceStorage = whiteFactory.DrawQueen(temp2, this);
         }
 
         else if(fileInput.at(1) == 'k'){
-            this->_undoMovePieceStorage = whiteFactory.DrawKing(temp2);
+            this->_undoMovePieceStorage = whiteFactory.DrawKing(temp2, this);
         }
     }
 
     else if(fileInput.at(0) == '-'){
         if(fileInput.at(1) == 'p'){
-            this->_undoMovePieceStorage = blackFactory.DrawPawn(temp2);
+            this->_undoMovePieceStorage = blackFactory.DrawPawn(temp2, this);
         }
 
         else if(fileInput.at(1) == 'r'){
-            this->_undoMovePieceStorage = blackFactory.DrawRook(temp2);
+            this->_undoMovePieceStorage = blackFactory.DrawRook(temp2, this);
         }
 
         else if(fileInput.at(1) == 'h'){
-            this->_undoMovePieceStorage = blackFactory.DrawKnight(temp2);
+            this->_undoMovePieceStorage = blackFactory.DrawKnight(temp2, this);
         }
 
         else if(fileInput.at(1) == 'b'){
-            this->_undoMovePieceStorage = blackFactory.DrawBishop(temp2);
+            this->_undoMovePieceStorage = blackFactory.DrawBishop(temp2, this);
         }
 
         else if(fileInput.at(1) == 'q'){
-            this->_undoMovePieceStorage = blackFactory.DrawQueen(temp2);
+            this->_undoMovePieceStorage = blackFactory.DrawQueen(temp2, this);
         }
 
         else if(fileInput.at(1) == 'k'){
-            this->_undoMovePieceStorage = blackFactory.DrawKing(temp2);
+            this->_undoMovePieceStorage = blackFactory.DrawKing(temp2, this);
         }
     }
 
