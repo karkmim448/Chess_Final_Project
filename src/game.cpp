@@ -9,26 +9,24 @@ Game::Game(): _playerTurn(1), _mostRecentEndingSquare(0), _mostRecentStartingSqu
 }
 
 Game::Game(std::string fileName){
-    ifstream fin;
     std::string temp = "";
-    
-    fin.open(fileName);
+    bool temp = true;
+
 
     for(int i = 0; i < 8; i++){
-        /*
-            -If statement determines order fo light square dark square for row
-            -If i is even, first square is light
-            -If i is odd, first square is dark
-        */
-        if (i % 2){
-            for(int j = 0; j < 8; j++){
 
+        for(int j = 0; j < 8; j++){
 
-                /*
-                    -If j is even, square is dark
-                    -If j is odd, square is light
-                */
-                if(j % 2){
+            /*
+                -If j is even, square is dark
+                -If j is odd, square is light
+            */
+            if(j % 2 == 1){
+                if(temp.at(0) == '+'){
+
+                }
+
+                else if(temp.at(0) == '-'){
 
                 }
 
@@ -36,22 +34,18 @@ Game::Game(std::string fileName){
 
                 }
             }
-        }
 
-        else{
-            for(int j = 0; j < 8; j++){
-                fin >> temp;
+            else{
+                if(temp.at(0) == '+'){
 
-                /*
-                    -If j is even, square is light
-                    -If j is odd, square is dark
-                */
-                if(j % 2){
+                }
+
+                else if(temp.at(0) == '-'){
 
                 }
 
                 else{
-
+                        
                 }
             }
         }

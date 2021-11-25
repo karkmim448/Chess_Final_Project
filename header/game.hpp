@@ -2,6 +2,7 @@
 #define __GAME_HPP__
 
 //#include </SFML/Graphics.hpp>
+#include <iostream>
 #include <fstream>
 
 #include "square.hpp"
