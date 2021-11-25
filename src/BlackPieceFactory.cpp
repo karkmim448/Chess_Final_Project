@@ -8,20 +8,35 @@
 
 BlackPieceFactory::BlackPieceFactory(){}
 
-piece* BlackPieceFactory::DrawPawn(std::pair<int, int> pos){
-    return new pawn(pos);
+piece* BlackPieceFactory::DrawPawn(std::pair<int, int> pos, Game* g){
+    pawn* p = new pawn(pos, Game* g);
+    p->setColor(false);
+    return p;
 }
-piece* BlackPieceFactory::DrawRook(std::pair<int, int> pos){
-    return new rook(pos);
+piece* BlackPieceFactory::DrawRook(std::pair<int, int> pos, Game* g){
+    rook* p = new rook(pos, Game* g);
+    p->setColor(false);
+    return p;
 }
-piece* BlackPieceFactory::DrawKing(std::pair<int, int> pos){
-    return new king(pos);
+piece* BlackPieceFactory::DrawKing(std::pair<int, int> pos, Game* g){
+    king* p = new king(pos, Game* g);
+    p->setColor(false);
+    return p;
 }
-piece*  BlackPieceFactory::DrawKnight(std::pair<int, int> pos){
-    return new knight(pos);
+piece*  BlackPieceFactory::DrawKnight(std::pair<int, int> pos, Game* g){
+    knight* p = new knight(pos, Game* g);
+    p->setColor(false);
+    return p;
 }
-piece* BlackPieceFactory::DrawBishop(std::pair<int, int> pos){
-    return new bishop(pos);
+piece* BlackPieceFactory::DrawBishop(std::pair<int, int> pos, Game* g){
+    bishop* p = new bishop(pos, Game* g);
+    p->setColor(false);
+    return p;
+}
+piece* BlackPieceFactory::DrawQueen(std::pair<int, int> pos, Game* g){
+    queen* p = new queen(pos, Game* g);
+    p->setColor(false);
+    return p;
 }
 
 

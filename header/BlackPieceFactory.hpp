@@ -3,19 +3,22 @@
 
 #include <string>
 #include "PieceFactory.hpp"
+#include "game.hpp"
 
 
 class BlackPieceFactory: public PieceFactory{
-
 public:
-	piece* DrawPawn(std::pair<int, int>);
-	piece* DrawRook(std::pair<int, int>);
-	piece* DrawKing(std::pair<int, int>);
-	piece* DrawKnight(std::pair<int, int>);
-	piece* DrawBishop(std::pair<int, int>);
-    piece* DrawEmpty(std::pair<int, int>);
+	BlackPieceFactory();
+
+	piece* DrawPawn(std::pair<int, int> pos, Game*);
+	piece* DrawRook(std::pair<int, int> pos, Game*);
+	piece* DrawKing(std::pair<int, int> pos, Game*);
+	piece*  DrawKnight(std::pair<int, int> pos, Game*);
+	piece* DrawBishop(std::pair<int, int> pos, Game*);
+	piece* DrawQueen(std::pair<int, int> pos, Game*);
 
 };
+
 
 
 
