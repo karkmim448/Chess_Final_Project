@@ -10,7 +10,7 @@ Game::Game(): _playerTurn(1), _mostRecentEndingSquare(0), _mostRecentStartingSqu
 
 Game::Game(std::string fileName){
     std::string temp = "";
-    bool temp = true;
+    bool temp = true; //holds color of square, alternated whenever a square is created
 
 
     for(int i = 0; i < 8; i++){
