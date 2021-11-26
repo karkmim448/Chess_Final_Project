@@ -18,7 +18,7 @@ after player turn, two numbers to indicate mostRecentStartingSquare pair positio
 
 after mostRecentStartingSquare, two numbers to indicate mostRecentEndingSquare pair position
 
-after mostRecentEndingSquare, letter combination to indicate piece stored in undoMovePieceStorage
+after mostRecentEndingSquare, letter combination to indicate piece stored in undoMoveInitialPieceStorage
 positive = white
 negative = black
 0 = empty
@@ -28,3 +28,5 @@ b = bishop
 q = queen
 k = king
 p = pawn
+
+repeat for undoMoveFinalPieceStorage
