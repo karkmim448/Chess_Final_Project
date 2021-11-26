@@ -2,12 +2,15 @@
 #define __piece_hpp__
 
 #include <string>
+#include <vector>
 
 class piece{
-private:
-	bool _color;
-	bool _icon;
 public:
+	bool _color;
+	std::string _icon;
+	std::pair<int, int> _position;
+	std::vector<std::pair<int,int>> _possiblemoves;
+
 	virtual bool getColor()=0;
 	virtual std::string getIcon()=0;
 	virtual void setColor(bool)=0;
