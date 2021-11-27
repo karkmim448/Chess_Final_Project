@@ -1,19 +1,19 @@
 #ifndef STATE_HPP
 #define STATE_HPP
 
-namespace kg {
-    class State {
-    public:
-        virtual ~State() { }
-        virtual void init() = 0;
 
-        virtual void handleInput() = 0;
-        virtual void update(float dt) = 0;
-        virtual void render(float dt) = 0;
+class State {
+public:
+    virtual ~State() { }
+    virtual void init() = 0;
+    
+    virtual void handleInput();
+    virtual void update(float dt);
+    virtual void Draw(float dt);
 
-        virtual void pause() { }
-        virtual void resume() { }
-    };
-}
+    virtual void pause() { }
+    virtual void resume() { }
+};
+
 
 #endif // STATE_HPP

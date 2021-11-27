@@ -6,28 +6,28 @@
 
 #include "state.hpp"
 
-namespace kg {
-    typedef std::unique_ptr<State> StateRef;
 
-    class StateMachine {
-        public:
-            StateMachine() { }
-            ~StateMachine() { }
+typedef std::unique_ptr<State> StateRef;
 
-            void addState(StateRef newState, bool isReplacing = true);
-            void removeState();
-            // Run at start of each loop in Game.cpp
-            void processStateChanges();
+class StateMachine {
+    public:
+        StateMachine() { }
+        ~StateMachine() { }
 
-            StateRef& getActiveState();
+        void addState(StateRef newState, bool isReplacing = true);
+        void removeState();
+        // Run at start of each loop in Game.cpp
+        void processStateChanges();
 
-        private:
-            std::stack<StateRef> _states;
-            StateRef _newState;
+        StateRef& getActiveState();
 
-            bool _isRemoving;
-            bool _isAdding, _isReplacing;
-    };
-}
+    private:
+        std::stack<StateRef> _states;
+        StateRef _newState;
+
+        bool _isRemoving;
+        bool _isAdding, _isReplacing;
+};
+
 
 #endif // STATE_MACHINE_HPP
