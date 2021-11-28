@@ -11,13 +11,13 @@ Game::Game(): _playerTurn(1), _destinationSquare(0), _initialSquare(0), _initial
 
 Game::Game(std::string fileName){
     std::fstream fin; //extracts input from file to be used for piece creation
-    std::string fileInput = "";  //stores input from fin to be used to parse piece storage for piece creation
+    std::string fileInput = "";  //stores piece codes from fin
 
     bool squareColor = true; //holds color of square, alternated whenever a square is created
-    std::pair<int, int> temp;
-    std::pair<int, int> temp2; //holds position to be fed to piece factories
-    int fileRow, fileColumn; //used by fin to build pairs for undoStorage variables
-                             //fileRow is also used as the temp variable for single integer variables by fin
+    std::pair<int, int> temp; 
+    std::pair<int, int> temp2; //holds positions to be fed to piece factories
+    int fileRow, fileColumn; //used by fin to build pairs for undoMove variables
+                             //fileRow is also used as the temp variable for player turn
 
     WhitePieceFactory whiteFactory; //white piece factory used to generate all white pieces
     BlackPieceFactory blackFactory; //black piece factory used to generate all black pieces
@@ -27,10 +27,9 @@ Game::Game(std::string fileName){
     
     //iterates through each row in board
     for(int i = 0; i < 8; i++){
-
         //iterates through each column in each row of board
         for(int j = 0; j < 8; j++){
-            //fin should be iterating through the 8x8 grid of pieces stored in Savestates
+            //fin should be iterating through the 8x8 grid of pieces stored in Save
             fin >> fileInput;
 
             //make the position based on i and j values, i is row, j is column
@@ -38,57 +37,11 @@ Game::Game(std::string fileName){
 
             //check what color the piece is as well as if there is even a piece there
             if(fileInput.at(0) == '+'){ //white piece branch
-                //check what piece is at this position, build the square using said piece
-                if(fileInput.at(1) == 'p'){
-                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawPawn(temp2, this));
-                }
-
-                else if(fileInput.at(1) == 'r'){
-                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawRook(temp2, this));
-                }
-
-                else if(fileInput.at(1) == 'h'){
-                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawKnight(temp2, this));
-                }
-
-                else if(fileInput.at(1) == 'b'){
-                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawBishop(temp2, this));
-                }
-
-                else if(fileInput.at(1) == 'q'){
-                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawQueen(temp2, this));
-                }
-
-                else if(fileInput.at(1) == 'k'){
-                    this->_board[i][j] = new Square(squareColor, whiteFactory.DrawKing(temp2, this));
-                }
+                this->_board[i][j] = new Square(squareColor, this->pieceBuilder(fileInput, &whiteFactory, temp2));
             }
 
             else if(fileInput.at(0) == '-'){ //black piece branch
-                //check what piece is at this position, build the square using said piece
-                if(fileInput.at(1) == 'p'){
-                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawPawn(temp2, this));
-                }
-
-                else if(fileInput.at(1) == 'r'){
-                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawRook(temp2, this));
-                }
-
-                else if(fileInput.at(1) == 'h'){
-                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawKnight(temp2, this));
-                }
-
-                else if(fileInput.at(1) == 'b'){
-                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawBishop(temp2, this));
-                }
-
-                else if(fileInput.at(1) == 'q'){
-                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawQueen(temp2, this));
-                }
-
-                else if(fileInput.at(1) == 'k'){
-                    this->_board[i][j] = new Square(squareColor, blackFactory.DrawKing(temp2, this));
-                }
+                this->_board[i][j] = new Square(squareColor, this->pieceBuilder(fileInput, &blackFactory, temp2));
             }
 
             else{   //empty square branch
@@ -105,7 +58,7 @@ Game::Game(std::string fileName){
     fin >> fileRow;
     this->_playerTurn = fileRow;
 
-    //read in mostRecentStartingSquare and set it
+    //read in initialSquare and set it
     fin >> fileRow;
     fin >> fileColumn;
 
@@ -113,7 +66,7 @@ Game::Game(std::string fileName){
 
     temp = std::make_pair(fileRow, fileColumn);
 
-    //read in mostRecentEndingSquare and set it
+    //read in destinationSquare and set it
     fin >> fileRow;
     fin >> fileColumn;
 
@@ -121,122 +74,34 @@ Game::Game(std::string fileName){
 
     temp2 = std::make_pair(fileRow, fileColumn);
 
-    //read in undoMoveInitialPieceStorage and set it
+    //read in intialPiece and set it
     fin >>fileInput;
 
     //repeat for loop logic, but only got through it once for undoMoveInitialPieceStorage
-    if(fileInput.at(0) == '+'){
-        if(fileInput.at(1) == 'p'){
-            this->_initialPiece = whiteFactory.DrawPawn(temp, this);
-        }
-
-        else if(fileInput.at(1) == 'r'){
-            this->_initialPiece = whiteFactory.DrawRook(temp, this);
-        }
-
-        else if(fileInput.at(1) == 'h'){
-            this->_initialPiece = whiteFactory.DrawKnight(temp, this);
-        }
-
-        else if(fileInput.at(1) == 'b'){
-            this->_initialPiece = whiteFactory.DrawBishop(temp, this);
-        }
-
-        else if(fileInput.at(1) == 'q'){
-            this->_initialPiece = whiteFactory.DrawQueen(temp, this);
-        }
-
-        else if(fileInput.at(1) == 'k'){
-            this->_initialPiece = whiteFactory.DrawKing(temp, this);
-        }
+    if(fileInput.at(0) == '+'){ //white piece branch
+        this->_initialPiece = this->pieceBuilder(fileInput, &whiteFactory, temp);
     }
 
-    else if(fileInput.at(0) == '-'){
-        if(fileInput.at(1) == 'p'){
-            this->_initialPiece = blackFactory.DrawPawn(temp, this);
-        }
-
-        else if(fileInput.at(1) == 'r'){
-            this->_initialPiece = blackFactory.DrawRook(temp, this);
-        }
-
-        else if(fileInput.at(1) == 'h'){
-            this->_initialPiece = blackFactory.DrawKnight(temp, this);
-        }
-
-        else if(fileInput.at(1) == 'b'){
-            this->_initialPiece = blackFactory.DrawBishop(temp, this);
-        }
-
-        else if(fileInput.at(1) == 'q'){
-            this->_initialPiece = blackFactory.DrawQueen(temp, this);
-        }
-
-        else if(fileInput.at(1) == 'k'){
-            this->_initialPiece = blackFactory.DrawKing(temp, this);
-        }
+    else if(fileInput.at(0) == '-'){ //black piece branch
+        this->_initialPiece = this->pieceBuilder(fileInput, &blackFactory, temp);
     }
 
-    else{
+    else{ //empty square branch
         this->_initialPiece = nullptr;
     }
 
-    //repeat for undoMoveFinalPieceStorage
+    //repeat for finalPiece
     fin >> fileInput;
 
-    if(fileInput.at(0) == '+'){
-        if(fileInput.at(1) == 'p'){
-            this->_finalPiece = whiteFactory.DrawPawn(temp2, this);
-        }
-
-        else if(fileInput.at(1) == 'r'){
-            this->_finalPiece = whiteFactory.DrawRook(temp2, this);
-        }
-
-        else if(fileInput.at(1) == 'h'){
-            this->_finalPiece = whiteFactory.DrawKnight(temp2, this);
-        }
-
-        else if(fileInput.at(1) == 'b'){
-            this->_finalPiece = whiteFactory.DrawBishop(temp2, this);
-        }
-
-        else if(fileInput.at(1) == 'q'){
-            this->_finalPiece = whiteFactory.DrawQueen(temp2, this);
-        }
-
-        else if(fileInput.at(1) == 'k'){
-            this->_finalPiece = whiteFactory.DrawKing(temp2, this);
-        }
+    if(fileInput.at(0) == '+'){ //white piece branch
+        this->_finalPiece = this->pieceBuilder(fileInput, &whiteFactory, temp2);
     }
 
-    else if(fileInput.at(0) == '-'){
-        if(fileInput.at(1) == 'p'){
-            this->_finalPiece = blackFactory.DrawPawn(temp2, this);
-        }
-
-        else if(fileInput.at(1) == 'r'){
-            this->_finalPiece = blackFactory.DrawRook(temp2, this);
-        }
-
-        else if(fileInput.at(1) == 'h'){
-            this->_finalPiece = blackFactory.DrawKnight(temp2, this);
-        }
-
-        else if(fileInput.at(1) == 'b'){
-            this->_finalPiece = blackFactory.DrawBishop(temp2, this);
-        }
-
-        else if(fileInput.at(1) == 'q'){
-            this->_finalPiece = blackFactory.DrawQueen(temp2, this);
-        }
-
-        else if(fileInput.at(1) == 'k'){
-            this->_finalPiece = blackFactory.DrawKing(temp2, this);
-        }
+    else if(fileInput.at(0) == '-'){ //black piece branch
+        this->_finalPiece = this->pieceBuilder(fileInput, &blackFactory, temp2);
     }
 
-    else{
+    else{ //empty square branch
         this->_finalPiece = nullptr;
     }
 }
@@ -301,8 +166,6 @@ void Game::setFinalPiece(piece* toBeSet){
 void Game::save(){
     std::ofstream fout; //outputs information to Save.txt for use in a later load
 
-    piece* temp;
-
     fout.open("../Save/Save.txt"); //opens Save.txt
 
     //start by saving board state
@@ -311,47 +174,8 @@ void Game::save(){
     for(int i = 0; i < 8; i++){
         //inner for loop iterates through each square in each row
         for(int j = 0; j < 8; j++){
-            temp = this->getSquare(std::make_pair(i, j))->getPiece();
-            //check if there is a piece in target square, else store empty square
-            if(temp != nullptr){
-                    if(temp->getColor()){ //white piece branch
-                        fout << '+';
-                    }
-
-                    else{   //white piece branch
-                        fout << '-';
-                    }
-
-                    if(temp->getIcon() == "images/white_pawn.png" || temp->getIcon() == "images/black_pawn.png"){ //pawn branch
-                        fout << 'p';
-                    }
-
-                    else if (temp->getIcon() == "images/white_rook.png" || temp->getIcon() == "images/black_rook.png"){ //rook branch
-                        fout << 'r';
-                    }
-
-                    else if(temp->getIcon() == "images/white_knight.png" || temp->getIcon() == "images/black_knight.png"){ //knight branch
-                        fout << 'h';
-                    }
-
-                    else if(temp->getIcon() == "images/white_bishop.png" || temp->getIcon() == "images/black_bishop.png"){ //bishop branch
-                        fout << 'b';
-                    }
-
-                    else if(temp->getIcon() == "images/white_queen.png" || temp->getIcon() == "images/black_queen.png"){ //queen branch
-                        fout << 'q';
-                    }
-
-                    else{ //king branch
-                        fout << 'k';
-                    }
-            }
-
-            else{ //empty square branch
-                fout << '0';
-            }
-
-            fout << ' ';
+            //output code for each square in row to output file
+            fout << this->codeBuilder(this->getSquare(std::make_pair(i, j))->getPiece()) << ' ';
         }
         //after each row, output newline to keep formatting
         fout << std::endl;
@@ -375,88 +199,10 @@ void Game::save(){
     fout << this->getDestinationSquare()->first << ' ' << this->getDestinationSquare()->second << std::endl;
 
     //store initialPiece using for loop logic
-    temp = this->getInitialPiece();
-
-    if(temp != nullptr){
-        if(temp->getColor()){
-            fout << '+';
-        }
-
-        else{
-            fout << '-';
-        }
-
-        if(temp->getIcon() == "images/white_pawn.png" || temp->getIcon() == "images/black_pawn.png"){
-            fout << 'p';
-        }
-
-        else if(temp->getIcon() == "images/white_rook.png" || temp->getIcon() == "images/black_rook.png"){
-            fout << 'r';
-        }
-
-        else if(temp->getIcon() == "images/white_knight.png" || temp->getIcon() == "images/black_knight.png"){
-            fout << 'h';
-        }
-
-        else if(temp->getIcon() == "images/white_bishop.png" || temp->getIcon() == "images/black_bishop.png"){
-            fout << 'b';
-        }
-
-        else if(temp->getIcon() == "images/white_queen.png" || temp->getIcon() == "images/black_queen.png"){
-            fout << 'q';
-        }
-
-        else{
-            fout << 'k';
-        }
-    }
-
-    else{
-        fout << '0';
-    }
-
-    fout << std::endl;
+    fout << this->codeBuilder(this->getInitialPiece()) << std::endl;
 
     //store finalPiece using for loop logic
-    temp = this->getFinalPiece();
-
-    if(temp != nullptr){
-        if(temp->getColor()){
-            fout << '+';
-        }
-
-        else{
-            fout << '-';
-        }
-
-        if(temp->getIcon() == "images/white_pawn.png" || temp->getIcon() == "images/black_pawn.png"){
-            fout << 'p';
-        }
-
-        else if(temp->getIcon() == "images/white_rook.png" || temp->getIcon() == "images/black_rook.png"){
-            fout << 'r';
-        }
-
-        else if(temp->getIcon() == "images/white_knight.png" || temp->getIcon() == "images/black_knight.png"){
-            fout << 'h';
-        }
-
-        else if(temp->getIcon() == "images/white_bishop.png" || temp->getIcon() == "images/black_bishop.png"){
-            fout << 'b';
-        }
-
-        else if(temp->getIcon() == "images/white_queen.png" || temp->getIcon() == "images/black_queen.png"){
-            fout << 'q';
-        }
-
-        else{
-            fout << 'k';
-        }
-    }
-
-    else{
-        fout << '0';
-    }
+    fout << this->codeBuilder(this->getFinalPiece()) << std::endl;
 }
 
 void Game::load(){
@@ -483,55 +229,11 @@ void Game::load(){
             delete this->getSquare(std::make_pair(i, j))->getPiece();
 
             if(fileInput.at(0) == '+'){//white piece branch
-                if(fileInput.at(1) == 'p'){
-                    this->getSquare(std::make_pair(i, j))->setPiece(whiteFactory.DrawPawn(std::make_pair(i, j), this));
-                }
-
-                else if(fileInput.at(1) == 'r'){
-                    this->getSquare(std::make_pair(i, j))->setPiece(whiteFactory.DrawRook(std::make_pair(i, j), this));
-                }
-
-                else if(fileInput.at(1) == 'h'){
-                    this->getSquare(std::make_pair(i, j))->setPiece(whiteFactory.DrawKnight(std::make_pair(i, j), this));
-                }
-
-                else if(fileInput.at(1) == 'b'){
-                    this->getSquare(std::make_pair(i, j))->setPiece(whiteFactory.DrawBishop(std::make_pair(i, j), this));
-                }
-
-                else if(fileInput.at(1) == 'q'){
-                    this->getSquare(std::make_pair(i, j))->setPiece(whiteFactory.DrawQueen(std::make_pair(i, j), this));
-                }
-
-                else{
-                    this->getSquare(std::make_pair(i, j))->setPiece(whiteFactory.DrawKing(std::make_pair(i, j), this));
-                }
+                this->getSquare(std::make_pair(i, j))->setPiece(this->pieceBuilder(fileInput, &whiteFactory, std::make_pair(i, j)));
             }
 
             else if(fileInput.at(0) == '-'){//black piece branch
-                if(fileInput.at(1) == 'p'){
-                    this->getSquare(std::make_pair(i, j))->setPiece(blackFactory.DrawPawn(std::make_pair(i, j), this));
-                }
-
-                else if(fileInput.at(1) == 'r'){
-                    this->getSquare(std::make_pair(i, j))->setPiece(blackFactory.DrawRook(std::make_pair(i, j), this));
-                }
-
-                else if(fileInput.at(1) == 'h'){
-                    this->getSquare(std::make_pair(i, j))->setPiece(blackFactory.DrawKnight(std::make_pair(i, j), this));
-                }
-
-                else if(fileInput.at(1) == 'b'){
-                    this->getSquare(std::make_pair(i, j))->setPiece(blackFactory.DrawBishop(std::make_pair(i, j), this));
-                }
-
-                else if(fileInput.at(1) == 'q'){
-                    this->getSquare(std::make_pair(i, j))->setPiece(blackFactory.DrawQueen(std::make_pair(i, j), this));
-                }
-
-                else{
-                    this->getSquare(std::make_pair(i, j))->setPiece(blackFactory.DrawKing(std::make_pair(i, j), this));
-                }
+                this->getSquare(std::make_pair(i, j))->setPiece(this->pieceBuilder(fileInput, &blackFactory, std::make_pair(i, j)));
             }
 
             else{ //empty square branch
@@ -564,55 +266,11 @@ void Game::load(){
     fin >> fileInput;
 
     if(fileInput.at(0) == '+'){//white piece branch
-        if(fileInput.at(1) == 'p'){
-            this->setInitialPiece(whiteFactory.DrawPawn(*initialSquare, this));
-        }
-
-        else if(fileInput.at(1) == 'r'){
-            this->setInitialPiece(whiteFactory.DrawRook(*initialSquare, this));
-        }
-
-        else if(fileInput.at(1) == 'h'){
-            this->setInitialPiece(whiteFactory.DrawKnight(*initialSquare, this));
-        }
-
-        else if(fileInput.at(1) == 'b'){
-            this->setInitialPiece(whiteFactory.DrawBishop(*initialSquare, this));
-        }
-
-        else if(fileInput.at(1) == 'q'){
-            this->setInitialPiece(whiteFactory.DrawQueen(*initialSquare, this));
-        }
-
-        else{
-            this->setInitialPiece(whiteFactory.DrawKing(*initialSquare, this));
-        }
+        this->setInitialPiece(this->pieceBuilder(fileInput, &whiteFactory, *initialSquare));
     }
 
     else if(fileInput.at(0) == '-'){//black piece branch
-        if(fileInput.at(1) == 'p'){
-            this->setInitialPiece(blackFactory.DrawPawn(*initialSquare, this));
-        }
-
-        else if(fileInput.at(1) == 'r'){
-            this->setInitialPiece(blackFactory.DrawRook(*initialSquare, this));
-        }
-
-        else if(fileInput.at(1) == 'h'){
-            this->setInitialPiece(blackFactory.DrawKnight(*initialSquare, this));
-        }
-
-        else if(fileInput.at(1) == 'b'){
-            this->setInitialPiece(blackFactory.DrawBishop(*initialSquare, this));
-        }
-
-        else if(fileInput.at(1) == 'q'){
-            this->setInitialPiece(blackFactory.DrawQueen(*initialSquare, this));
-        }
-
-        else{
-            this->setInitialPiece(blackFactory.DrawKing(*initialSquare, this));
-        }
+        this->setInitialPiece(this->pieceBuilder(fileInput, &blackFactory, *initialSquare));
     }
 
     else{ //empty square branch
@@ -623,55 +281,11 @@ void Game::load(){
     fin >> fileInput;
 
     if(fileInput.at(0) == '+'){//white piece branch
-        if(fileInput.at(1) == 'p'){
-            this->setFinalPiece(whiteFactory.DrawPawn(*destinationSquare, this));
-        }
-
-        else if(fileInput.at(1) == 'r'){
-            this->setFinalPiece(whiteFactory.DrawRook(*destinationSquare, this));
-        }
-
-        else if(fileInput.at(1) == 'h'){
-            this->setFinalPiece(whiteFactory.DrawKnight(*destinationSquare, this));
-        }
-
-        else if(fileInput.at(1) == 'b'){
-            this->setFinalPiece(whiteFactory.DrawBishop(*destinationSquare, this));
-        }
-
-        else if(fileInput.at(1) == 'q'){
-            this->setFinalPiece(whiteFactory.DrawQueen(*destinationSquare, this));
-        }
-
-        else{
-            this->setFinalPiece(whiteFactory.DrawKing(*destinationSquare, this));
-        }
+        this->setFinalPiece(this->pieceBuilder(fileInput, &whiteFactory, *initialSquare));
     }
 
     else if(fileInput.at(0) == '-'){//black piece branch
-        if(fileInput.at(1) == 'p'){
-            this->setFinalPiece(blackFactory.DrawPawn(*destinationSquare, this));
-        }
-
-        else if(fileInput.at(1) == 'r'){
-            this->setFinalPiece(blackFactory.DrawRook(*destinationSquare, this));
-        }
-
-        else if(fileInput.at(1) == 'h'){
-            this->setFinalPiece(blackFactory.DrawKnight(*destinationSquare, this));
-        }
-
-        else if(fileInput.at(1) == 'b'){
-            this->setFinalPiece(blackFactory.DrawBishop(*destinationSquare, this));
-        }
-
-        else if(fileInput.at(1) == 'q'){
-            this->setFinalPiece(blackFactory.DrawQueen(*destinationSquare, this));
-        }
-
-        else{
-            this->setFinalPiece(blackFactory.DrawKing(*destinationSquare, this));
-        }
+        this->setFinalPiece(this->pieceBuilder(fileInput, &blackFactory, *initialSquare));
     }
 
     else{ //empty square branch
@@ -706,10 +320,25 @@ bool Game::movePiece(std::pair<int, int>* initialPosition, std::pair<int, int>* 
     bool pawnPromotion = false;
 
     //check special cases(en-passant, castling, pawn promotion)
-    //if pawn pawn is moving diagonally into an empty square, must be en-passant
+    
+    //check pawn special cases
     if(this->getSquare(*initialPosition)->getPiece()->getIcon() == "images/white_pawn.png" || this->getSquare(*initialPosition)->getPiece()->getIcon() == "images/black_pawn.png"){
+        //if pawn pawn is moving diagonally into an empty square, must be en-passant
         if(this->getSquare(*destinationSquare)->getPiece() == nullptr && destinationSquare->second - initialPosition->second != 0){
             enPassantPossible = true;
+        }
+
+        //if a pawn is moving in to the last row, must be a promotion
+        if(this->getSquare(*initialPosition)->getPiece()->getColor()){//white piece branch
+            if(destinationSquare->first == 0){
+                pawnPromotion = true;
+            }
+        }
+        
+        else{ //black piece branch
+            if(destinationSquare->first == 7){
+                pawnPromotion = true;
+            }
         }
     }
 
@@ -717,21 +346,6 @@ bool Game::movePiece(std::pair<int, int>* initialPosition, std::pair<int, int>* 
     else if(this->getSquare(*initialPosition)->getPiece()->getIcon() == "images/white_king.png" || this->getSquare(*initialPosition)->getPiece()->getIcon() == "images/black_king.png"){
         if(destinationSquare->second - initialPosition->second == 2 || destinationSquare->second - initialPosition->second == -2){
             castlingPossible = true;
-        }
-    }
-
-    //if a pawn is moving in to the last row, must be a promotion
-    else if(this->getSquare(*initialPosition)->getPiece()->getIcon() == "images/white_pawn.png" || this->getSquare(*initialPosition)->getPiece()->getIcon() == "images/black_pawn.png"){
-        if(this->getSquare(*initialPosition)->getPiece()->getColor()){//white piece branch
-            if(destinationSquare->first == 0){
-                pawnPromotion = true;
-            }
-        }
-
-        else{ //black piece branch
-            if(destinationSquare->first == 7){
-                pawnPromotion = true;
-            }
         }
     }
 
@@ -861,4 +475,100 @@ void Game::undoMove(){ //FINISHME
     this->getSquare(*this->getInitialSquare())->setPiece(this->getInitialPiece());
     this->getSquare(*this->getDestinationSquare())->setPiece(this->getFinalPiece());
     this->setPlayerTurn(!this->getPlayerTurn());
+}
+
+piece* Game::pieceBuilder(std::string code, PieceFactory* factory, std::pair<int, int> position){
+    //check what piece is at this position, build the square using said piece
+    piece* output;
+
+    //check for empty piece
+    if(code.at(0) == '0'){
+        return nullptr;
+    }
+    //move to general case
+
+    if(code.at(1) == 'p'){ //pawn branch
+        output = factory->DrawPawn(position, this);
+    }
+
+    else if(code.at(1) == 'r'){ //rook branch
+        output = factory->DrawRook(position, this);
+    }
+
+    else if(code.at(1) == 'h'){ //knight branch
+        output =  factory->DrawRook(position, this);
+    }
+
+    else if(code.at(1) == 'b'){ //bishop branch
+        output =  factory->DrawBishop(position, this);
+    }
+
+    else if(code.at(1) == 'q'){ //queen branch
+        output =  factory->DrawQueen(position, this);
+    }
+
+    else if(code.at(1) == 'k'){ //king branch
+        output =  factory->DrawKing(position, this);
+    }
+
+    if(code.at(2) == '1'){ //check if the piece has moved, if so update hasMoved for that piece
+        output->setHasMoved(1);
+    }
+
+    return output;
+}
+
+std::string Game::codeBuilder(piece* input){
+    std::string output = "";
+
+    //check to see if empty piece has been passed through
+    if(input == nullptr){
+        return "0";
+    }
+    //move to general case
+
+    //check color of piece, store in output
+    if(input->getColor()){ //white piece branch
+        output.append("+");
+    }
+
+    else{ //black piece branch
+        output.append("-");
+    }
+
+    //check what piece input it, store in output
+    if(input->getIcon() == "images/white_pawn.png" || input->getIcon() == "images/black_pawn.png"){ //pawn branch
+        output.append("p");
+    }
+
+    else if(input->getIcon() == "images/white_rook.png" || input->getIcon() == "images/black_rook.png"){ //rook branch
+        output.append("r");
+    }
+
+    else if(input->getIcon() == "images/white_knight.png" || input->getIcon() == "images/black_knight.png"){ //knight branch
+        output.append("h");
+    }
+
+    else if(input->getIcon() == "images/white_bishop.png" || input->getIcon() == "images/black_bishop.png"){ //bishop branch
+        output.append("b");
+    }
+
+    else if(input->getIcon() == "images/white_queen.png" || input->getIcon() == "images/black_queen.png"){ //queen branch
+        output.append("q");
+    }
+
+    else{ //king branch
+        output.append("k");
+    }
+
+    //check if piece has moved, store in output
+    if(input->getHasMoved()){
+        output.append("1");
+    }
+
+    else{
+        output.append("0");
+    }
+
+    return output;
 }

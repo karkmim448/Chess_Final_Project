@@ -56,6 +56,21 @@ class Game{
       -Linked with _mostRecentEndingSquare
     */
     piece* _finalPiece;
+
+    /*
+      -called whenever a new piece must be read in froma file
+      -returns a newly constructed piece or nullptr if the code is 0
+      -codes can be found in Template.txt
+    */
+    piece* pieceBuilder(std::string code, PieceFactory* factory, std::pair<int, int> position);
+
+    /*
+      -called whenever a piece is to be stored into Save.txt
+      -returns a 3 character code to represent the piece in Save.txt
+      -Code template can be found in Template.txt
+    */
+    std::string codeBuilder(piece* input);
+    
   public:
     //Constructor
     Game();

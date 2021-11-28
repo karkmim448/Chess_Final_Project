@@ -9,6 +9,9 @@ b = bishop
 q = queen
 k = king
 p = pawn
+third letter is has moved status
+0 = has not moved
+1 = has moved
 
 after board state, number to indicate which player's turn it is
 1 = white
@@ -28,5 +31,8 @@ b = bishop
 q = queen
 k = king
 p = pawn
+third letter is has moved status
+0 = has not moved
+1 = has moved
 
 repeat for finalPiece
