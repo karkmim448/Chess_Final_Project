@@ -1,7 +1,19 @@
-#include "../header/game_gui.hpp"
+#include <SFML/Graphics.hpp>
+
+//#include "../header/menu.hpp"
+#include "../header/menu_gui.hpp"
+#include <iostream>
+
+
+
 
 int main() {
-    GameGUI(900,900,"chess");
+  sf::RenderWindow window(sf::VideoMode(900, 900), "Chess Dot Com");
+  
+  
+  
+  MenuGui gui(window);
 
-    return 0;
+  return EXIT_SUCCESS;
+
 }
