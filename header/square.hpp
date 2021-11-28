@@ -42,7 +42,7 @@ class Square{
     //Basic Mutators
     void setColor(bool color);//should never be used
     void setHighlight(bool highlight);
-    void setPiece(piece* piece);
+    void setPiece(piece* toBeSet);
 };
 
 #endif //__SQUARE_HPP__//

@@ -4,6 +4,7 @@
 //#include </SFML/Graphics.hpp>
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 #include "square.hpp"
 #include "PieceFactory.hpp"
@@ -33,20 +34,43 @@ class Game{
       -Used by undoMove
       -Position where the piece used to be, treated as the destination square for the piece
     */
-    std::pair<int, int>* _mostRecentStartingSquare;
+    std::pair<int, int>* _initialSquare;
 
 
     /*
       -Used to undoMove
       -Position where the piece currently is, treating as the initial square for the piece
     */
-    std::pair<int, int>* _mostRecentEndingSquare;
+    std::pair<int, int>* _destinationSquare;
 
     /*
       -Used by undoMove
       -used to recover any piece that may have been captured prior to the undo, stores the piece pointer that was in mostRecentEndingSquare prioor to the initial move
+      -Linked with _mostRecentStartingSquare
     */
-    piece* _undoMovePieceStorage;
+    piece* _initialPiece;
+
+    /*
+      -used by undoMove
+      -used to recover a pawn pre promotion 
+      -Linked with _mostRecentEndingSquare
+    */
+    piece* _finalPiece;
+
+    /*
+      -called whenever a new piece must be read in froma file
+      -returns a newly constructed piece or nullptr if the code is 0
+      -codes can be found in Template.txt
+    */
+    piece* pieceBuilder(std::string code, PieceFactory* factory, std::pair<int, int> position);
+
+    /*
+      -called whenever a piece is to be stored into Save.txt
+      -returns a 3 character code to represent the piece in Save.txt
+      -Code template can be found in Template.txt
+    */
+    std::string codeBuilder(piece* input);
+    
   public:
     //Constructor
     Game();
@@ -58,15 +82,17 @@ class Game{
     //Basic Accessors
     bool getPlayerTurn();
     Square* getSquare(std::pair<int, int> position);
-    std::pair<int, int>* getMostRecentStartingSquare();
-    std::pair<int, int>* getMostRecentEndingSquare();
-    piece* getUndoMovePieceStorage();
+    std::pair<int, int>* getInitialSquare();
+    std::pair<int, int>* getDestinationSquare();
+    piece* getInitialPiece();
+    piece* getFinalPiece();
 
     //Basic Mutators
     void setPlayerTurn(bool playerTurn);
-    void setMostRecentStartingSquare(std::pair<int, int>* tobeSet);
-    void setMostRecentEndingSquare(std::pair<int, int>* toBeSet);
-    void setUndoMovePieceStorage(piece* toBeSet);
+    void setInitialSquare(std::pair<int, int>* tobeSet);
+    void setDestinationSquare(std::pair<int, int>* toBeSet);
+    void setInitialPiece(piece* toBeSet);
+    void setFinalPiece(piece* toBeSet);
 
     /*
       -Called during run-time by user input
@@ -101,7 +127,7 @@ class Game{
         -If move is valid, return true at end of function
       -Then de-highlights all squares and updates the playerTurn
     */
-    bool movePiece(std::pair<int, int> initialPosition, std::pair<int, int> destinationSquare);
+    bool movePiece(std::pair<int, int>* initialPosition, std::pair<int, int>* destinationSquare);
 
     /*
       -Called via the gui
