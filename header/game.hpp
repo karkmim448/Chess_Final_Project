@@ -4,6 +4,7 @@
 //#include </SFML/Graphics.hpp>
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 #include "square.hpp"
 #include "PieceFactory.hpp"
@@ -111,7 +112,7 @@ class Game{
         -If move is valid, return true at end of function
       -Then de-highlights all squares and updates the playerTurn
     */
-    bool movePiece(std::pair<int, int> initialPosition, std::pair<int, int> destinationSquare);
+    bool movePiece(std::pair<int, int>* initialPosition, std::pair<int, int>* destinationSquare);
 
     /*
       -Called via the gui

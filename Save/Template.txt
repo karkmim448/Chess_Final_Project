@@ -14,11 +14,11 @@ after board state, number to indicate which player's turn it is
 1 = white
 0 = black
 
-after player turn, two numbers to indicate mostRecentStartingSquare pair position
+after player turn, two numbers to indicate initialSquare pair position
 
-after mostRecentStartingSquare, two numbers to indicate mostRecentEndingSquare pair position
+after mostRecentStartingSquare, two numbers to indicate destinationSquare pair position
 
-after mostRecentEndingSquare, letter combination to indicate piece stored in undoMoveInitialPieceStorage
+after mostRecentEndingSquare, letter combination to indicate piece stored in initialPiece
 positive = white
 negative = black
 0 = empty
@@ -29,4 +29,4 @@ q = queen
 k = king
 p = pawn
 
-repeat for undoMoveFinalPieceStorage
+repeat for finalPiece

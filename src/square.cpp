@@ -31,6 +31,6 @@ void Square::setHighlight(bool highlight){
     this->_highlighted = highlight;
 }
 
-void Square::setPiece(piece* piece){
-    this->_piece = piece;
+void Square::setPiece(piece* toBeSet){
+    this->_piece = toBeSet;
 }
