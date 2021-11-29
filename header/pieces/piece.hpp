@@ -44,27 +44,26 @@ class piece{
 		*/
 		Game* _game;
 
-public:
-	//constructors
-	piece();
-	piece(bool color, std::string icon, Game* game);
-
-	//destructors
-	~piece();
-
-	//accessors
-	virtual bool getColor();
-	virtual std::string getIcon();
-	virtual std::vector<std::pair<int, int>> getPossibleMoves();
-	virtual bool getHasMoved();
-	virtual Game* getGame();
-
-	//mutators
-	virtual void setColor(bool color);
-	virtual void setHasMoved(bool hasMoved);
-
-	virtual void updatePossibleMoves(std::pair<int, int> position) = 0;
-
+	public:
+		//constructors
+		piece();
+		piece(bool color, std::string icon, Game* game);
+	
+		//destructors
+		~piece();
+	
+		//accessors
+		virtual bool getColor();
+		virtual std::string getIcon();
+		virtual std::vector<std::pair<int, int>> getPossibleMoves();
+		virtual bool getHasMoved();
+		virtual Game* getGame();
+	
+		//mutators
+		virtual void setColor(bool color);
+		virtual void setHasMoved(bool hasMoved);
+	
+		virtual void updatePossibleMoves(std::pair<int, int> position) = 0;
 };
 
 #endif //__PIECE_HPP__//

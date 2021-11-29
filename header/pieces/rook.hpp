@@ -8,6 +8,11 @@
 
 class rook : public piece{
     public:
+        rook();
+	    rook(bool color, std::string icon, Game* game);
+
+        ~rook();
+        
         void updatePossibleMoves(std::pair<int, int> position);
 };
 

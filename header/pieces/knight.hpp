@@ -5,6 +5,11 @@
 
 class knight : public piece{
     public:
+        knight();
+	    knight(bool color, std::string icon, Game* game);
+
+        ~knight();
+        
         void updatePossibleMoves(std::pair<int, int> position);
 };
 

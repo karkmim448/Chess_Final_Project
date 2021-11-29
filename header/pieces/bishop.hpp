@@ -5,6 +5,11 @@
 
 class bishop : public piece{
     public:
+        bishop();
+	    bishop(bool color, std::string icon, Game* game);
+
+        ~bishop();
+        
         void updatePossibleMoves(std::pair<int, int> position);
 };
 
