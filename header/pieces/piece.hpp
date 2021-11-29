@@ -55,7 +55,7 @@ class piece{
 		//accessors
 		virtual bool getColor();
 		virtual std::string getIcon();
-		virtual std::vector<std::pair<int, int>> getPossibleMoves();
+		virtual std::vector<std::pair<int, int>>* getPossibleMoves();
 		virtual bool getHasMoved();
 		virtual Game* getGame();
 	

@@ -17,8 +17,8 @@ std::string piece::getIcon(){
 	return this->_icon;
 }
 
-std::vector<std::pair<int, int>> piece::getPossibleMoves(){
-	return this->_possibleMoves;
+std::vector<std::pair<int, int>>* piece::getPossibleMoves(){
+	return &this->_possibleMoves;
 }
 
 bool piece::getHasMoved(){

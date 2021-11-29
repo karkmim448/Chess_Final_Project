@@ -291,10 +291,10 @@ bool Game::selectPiece(std::pair<int, int> initialPosition){
 
     this->getSquare(initialPosition)->getPiece()->updatePossibleMoves(initialPosition);
 
-    std::vector<std::pair<int, int>> possibleMoves = this->getSquare(initialPosition)->getPiece()->getPossibleMoves();
+    std::vector<std::pair<int, int>>* possibleMoves = this->getSquare(initialPosition)->getPiece()->getPossibleMoves();
 
-    for(int i = 0; i < possibleMoves.size(); i++){
-        this->getSquare(possibleMoves.at(i))->setHighlight(1);
+    for(int i = 0; i < possibleMoves->size(); i++){
+        this->getSquare(possibleMoves->at(i))->setHighlight(1);
     }
 
     return true;
@@ -413,10 +413,10 @@ bool Game::movePiece(std::pair<int, int>* initialPosition, std::pair<int, int>* 
     }
 
     //de-highlight highlighted squares
-    std::vector<std::pair<int, int>> possibleMoves = this->getInitialPiece()->getPossibleMoves();
+    std::vector<std::pair<int, int>>* possibleMoves = this->getInitialPiece()->getPossibleMoves();
 
-    for(int i = 0; i < possibleMoves.size(); i++){
-        this->getSquare(possibleMoves.at(i))->setHighlight(0);
+    for(int i = 0; i < possibleMoves->size(); i++){
+        this->getSquare(possibleMoves->at(i))->setHighlight(0);
     }
 
     return true;
