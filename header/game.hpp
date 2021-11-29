@@ -62,7 +62,7 @@ class Game{
       -returns a newly constructed piece or nullptr if the code is 0
       -codes can be found in Template.txt
     */
-    piece* pieceBuilder(std::string code, PieceFactory* factory, std::pair<int, int> position);
+    piece* pieceBuilder(std::string code, PieceFactory* factory);
 
     /*
       -called whenever a piece is to be stored into Save.txt
