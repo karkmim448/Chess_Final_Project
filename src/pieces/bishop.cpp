@@ -111,5 +111,4 @@ void bishop::updatePossibleMoves(std::pair<int, int> position){
             temp = std::make_pair(9, -9);
         }
     }
-
 }
