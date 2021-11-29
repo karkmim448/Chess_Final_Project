@@ -298,7 +298,7 @@ bool Game::selectPiece(std::pair<int, int> initialPosition){
         return false;
     }
 
-    this->getSquare(initialPosition)->getPiece()->updatePossibleMoves();
+    this->getSquare(initialPosition)->getPiece()->updatePossibleMoves(initialPosition);
 
     std::vector<std::pair<int, int>> possibleMoves = this->getSquare(initialPosition)->getPiece()->getPossibleMoves();
 
@@ -418,7 +418,7 @@ bool Game::movePiece(std::pair<int, int>* initialPosition, std::pair<int, int>* 
     //call pawn promotion if necessary
     if(pawnPromotion){
         pawn* temp = static_cast<pawn*>(this->getSquare(*destinationSquare)->getPiece());
-        temp->promote();
+        temp->promote(*destinationSquare);
     }
 
     //de-highlight highlighted squares
@@ -436,13 +436,13 @@ void Game::undoMove(){ //FINISHME
     //consists of moving rook and letting general case cover king movement
     if(this->getInitialPiece()->getIcon() == "images/white_king.png" || this->getInitialPiece()->getIcon() == "images/black_king.png"){
         if(this->getDestinationSquare()->second - this->getInitialSquare()->second == 2){
-            this->getSquare(std::make_pair(this->getInitialSquare()->first, this->getInitialSquare()->second + 1))->setHasMoved(0);
+            this->getSquare(std::make_pair(this->getInitialSquare()->first, this->getInitialSquare()->second + 1))->getPiece()->setHasMoved(0);
             this->getSquare(std::make_pair(this->getInitialSquare()->first, 7))->setPiece(this->getSquare(std::make_pair(this->getInitialSquare()->first, this->getInitialSquare()->second + 1))->getPiece());
             this->getSquare(std::make_pair(this->getInitialSquare()->first, this->getInitialSquare()->second + 1))->setPiece(nullptr);
         }
 
         else if(this->getDestinationSquare()->second = this->getInitialSquare()->second == -2){
-            this->getSquare(std::make_pair(this->getInitialSquare()->first, this->getInitialSquare()->second - 1))->setHasMoved(0);
+            this->getSquare(std::make_pair(this->getInitialSquare()->first, this->getInitialSquare()->second - 1))->getPiece()->setHasMoved(0);
             this->getSquare(std::make_pair(this->getInitialSquare()->first, 0))->setPiece(this->getSquare(std::make_pair(this->getInitialSquare()->first, this->getInitialSquare()->second - 1))->getPiece());
             this->getSquare(std::make_pair(this->getInitialSquare()->first, this->getInitialSquare()->second - 1))->setPiece(nullptr);
         }
@@ -466,7 +466,7 @@ void Game::undoMove(){ //FINISHME
         }
         //cover pawn double move case
         //set pawn hasmoved variable to 0 then let general case handle pawn movement
-        if(this->getDestinationSquare()->second - this->getInitialSquare()->second == 2 || this->getDestinationSquare()->second = this->getInitialSquare()->second == -2){
+        if((this->getDestinationSquare()->second - this->getInitialSquare()->second == 2) || (this->getDestinationSquare()->second = this->getInitialSquare()->second == -2)){
             this->getInitialPiece()->setHasMoved(0);
         }
     }

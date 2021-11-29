@@ -4,15 +4,8 @@
 #include "../../header/pieces/piece.hpp"
 
 class queen : public piece{
-public:
-    queen(std::pair<int, int> pos=std::make_pair(0,0));
-
-    bool getColor();
-    std::string getIcon();
-    void setColor(bool);
-    void setIcon(std::string);
-    bool moveCheck(std::pair<int, int> endingSquare);
-    void getPossibleMoves();
+    public:
+        void updatePossibleMoves(std::pair<int, int> position);
 };
 
 #endif
