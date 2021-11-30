@@ -28,22 +28,45 @@ The class diagram uses the abstract factory pattern to draw black pieces and whi
 
  
  ## Screenshots
- > Screenshots of the input/output after running your application
- ## Installation/Usage
+ https://youtu.be/e1k1t8uioH0
+ 
+ Menu:
+ https://imgur.com/UBE6ons
+ 
+ New Game Load:
+ https://imgur.com/pztGuoi
+ 
+ Loading from save:
+ https://imgur.com/dUVl7aJ
+ 
+ Pre-Pawn Capture
+ https://imgur.com/5WlFAlO
+ 
+ Pos-Pawn Capture:
+ https://imgur.com/dakwlcz
+
+## Installation/Usage
 Prerequisite installations:
-> Instal mingw g++ onto your operating system 
+-For Windows:
+> Install mingw g++ onto your operating system 
 > Download SFML for your operating system (https://www.sfml-dev.org/download/sfml/2.5.1/)
+
+-For Linux:
+> type sudo apt install libsfml-dev into terminal to download sfml
+> install cmake and gcc/gpp
 
 Running the game:
 Create a game executable:
  > Move to the directory with CMakeLists.txt
  > "CMake ." (or "CMake3 ." when sshing onto sledge or hammer)
  > "make"
- Run the game executable:
- > "./main
+ Run the game executable
+ > Move into build folder and type ./chess to run executable
 
 ## Testing
 We used the googletest framework to test our program.
+ - We tested Square, PieceFactory, and well as parts of piece.
+ - The rest of the program we manually tested using the GUI
 In order to run the unit tests, you will need to create and run the test executable.
 
 Create a test executable:
@@ -52,4 +75,9 @@ Create a test executable:
  > "make"
  Run the test executable:
  > "./test
+
+Current implementation status is:
+- Panw works but the en-passant case does not
+- Bishop works as intended
+- No other piece works as intended
  
