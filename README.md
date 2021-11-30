@@ -23,8 +23,6 @@ https://lucid.app/lucidchart/ea02bd3d-c8e0-4026-8497-5b377b4eb6fd/edit?viewport_
 Our class diagram uses the strategy pattern for each piece's moves. When a piece moves, the from square will change to empty strategy, and the to square will get the strategy that the previous square had.
 
 The class diagram uses the abstract factory pattern to draw black pieces and white pieces differently. It interacts with each square; the squares draw their own color and the piece that is on them. 
- 
- > * Plan one more sprint (that you will not necessarily complete before the end of the quarter). Your In-progress and In-testing columns should be empty (you are not doing more work currently) but your TODO column should have a full sprint plan in it as you have done before. This should include any known bugs (there should be some) or new features you would like to add. These should appear as issues/cards on your Project board.
 
  
  ## Screenshots
