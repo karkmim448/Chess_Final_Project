@@ -40,7 +40,6 @@ class Square{
     piece* getPiece();
     
     //Basic Mutators
-    void setColor(bool color);//should never be used
     void setHighlight(bool highlight);
     void setPiece(piece* toBeSet);
 };

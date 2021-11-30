@@ -23,10 +23,6 @@ piece* Square::getPiece(){
     return this->_piece;
 }
 
-void Square::setColor(bool color){
-    this->_color = color;
-}
-
 void Square::setHighlight(bool highlight){
     this->_highlighted = highlight;
 }

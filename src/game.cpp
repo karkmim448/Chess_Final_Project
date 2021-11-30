@@ -344,8 +344,12 @@ bool Game::movePiece(std::pair<int, int>* initialPosition, std::pair<int, int>* 
     //check if player has called undoMove prior to moveing a piece
     if(this->getSquare(*this->getInitialSquare())->getPiece() == nullptr){
         //prevents deletion of piece that is still on the board
-        delete this->getInitialPiece();
         delete this->getFinalPiece();
+
+        //pawn promotion case
+        if(this->getInitialPiece()->getIcon() != this->getSquare(*this->getDestinationSquare())->getPiece()->getIcon()){
+            delete this->getInitialPiece();
+        }
     }
     
     delete this->getInitialSquare();
