@@ -1,8 +1,9 @@
 #include "../../header/pieces/pawn.hpp"
 
 
-pawn::pawn(std::pair<int, int> pos){
+pawn::pawn(std::pair<int, int> pos, std::string s, Game* g){
     this->_position = pos;
+    this->_icon = s;
 }
 
 bool pawn::getColor(){
@@ -31,10 +32,10 @@ bool pawn::moveCheck(std::pair<int, int> endingSquare){
     }
 }
 
-void pawn::getPossibleMoves(){
+void pawn::getPossibleMoves(std::pair<int, int> startingSquare){
     std::pair<int, int> temp;
 
-    temp = _position;
+    temp = startingSquare;
 
     if(this->_color){
         if(temp.first < 7){

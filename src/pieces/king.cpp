@@ -3,8 +3,9 @@
 
 bool king::castleCheck(){return true;}
 
-king::king(std::pair<int, int> pos){
+king::king(std::pair<int, int> pos, std::string s, Game* g){
     this->_position = pos;
+    this->_icon = s;
 }
 
 bool king::getColor(){
@@ -33,10 +34,10 @@ bool king::moveCheck(std::pair<int, int> endingSquare){
     }
 }
 
-void king::getPossibleMoves(){
+void king::getPossibleMoves(std::pair<int, int> startingSquare){
     std::pair<int, int> temp;
 
-    temp = _position;
+    temp = startingSquare;
 
     //really terrible brute force implementation
     if(temp.first == 0 && temp.second == 0){

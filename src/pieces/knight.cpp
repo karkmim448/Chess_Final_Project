@@ -1,7 +1,8 @@
 #include "../../header/pieces/knight.hpp"
 
-knight::knight(std::pair<int, int> pos){
+knight::knight(std::pair<int, int> pos, std::string s, Game* g){
     this->_position = pos;
+    this->_icon = s;
 }
 
 bool knight::getColor(){
@@ -30,9 +31,9 @@ bool knight::moveCheck(std::pair<int, int> endingSquare){
     }
 }
 
-void knight::getPossibleMoves(){
+void knight::getPossibleMoves(std::pair<int, int> startingSquare){
     
-    std::pair<int, int> temp = _position;
+    std::pair<int, int> temp = startingSquare;
 
     //going down 2 and to the left and the right
     if(temp.first <= 5){
@@ -51,7 +52,7 @@ void knight::getPossibleMoves(){
                 _possiblemoves.push_back(std::make_pair(temp.first, temp.second));
             }
         }
-        temp = _position;
+        temp = startingSquare;
     }
 
     //going up 2 and left and right
@@ -70,7 +71,7 @@ void knight::getPossibleMoves(){
 
                 _possiblemoves.push_back(std::make_pair(temp.first, temp.second));
             }
-        temp = _position;
+        temp = startingSquare;
         }
     }
 
@@ -91,7 +92,7 @@ void knight::getPossibleMoves(){
                 _possiblemoves.push_back(std::make_pair(temp.first, temp.second));
             }
         }
-        temp = _position;
+        temp = startingSquare;
     }
 
     //going left 2 and then up and down
@@ -110,7 +111,7 @@ void knight::getPossibleMoves(){
 
                 _possiblemoves.push_back(std::make_pair(temp.first, temp.second));
             }
-        temp = _position;
+        temp = startingSquare;
         }
     }
 

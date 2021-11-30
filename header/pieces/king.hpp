@@ -1,23 +1,23 @@
 #ifndef __KING_HPP__
 #define __KING_HPP__
 
-#include "../../header/pieces/specialmove.hpp"
+#include "piece.hpp"
 
-class king : public specialmove{
+class king : public piece{
 
 public:
         bool castleCheck();
 
-        bool _hasMoved;
         bool _inCheck;	
 
-        king(std::pair<int, int> pos=std::make_pair(0,0));
+    king(std::pair<int, int> pos, std::string s, Game* g);
+
     bool getColor();
     std::string getIcon();
     void setColor(bool);
     void setIcon(std::string);
     bool moveCheck(std::pair<int, int> endingSquare);
-    void getPossibleMoves();
+    void getPossibleMoves(std::pair<int, int> startingSquare);
 };
 
 #endif

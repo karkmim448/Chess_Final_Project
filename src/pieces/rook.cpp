@@ -3,8 +3,9 @@
 
 bool rook::castleCheck(){return true;}
 
-rook::rook(std::pair<int, int> pos){
+rook::rook(std::pair<int, int> pos, std::string s, Game* g){
     this->_position = pos;
+    this->_icon = s;
 }
 
 bool rook::getColor(){
@@ -33,10 +34,10 @@ bool rook::moveCheck(std::pair<int, int> endingSquare){
     }
 }
 
-void rook::getPossibleMoves(){
+void rook::getPossibleMoves(std::pair<int, int> startingSquare){
     std::pair<int, int> temp;
 
-    temp = _position;
+    temp = startingSquare;
 
     while(temp.first <= 7){
         temp.first += 1;
@@ -44,7 +45,7 @@ void rook::getPossibleMoves(){
         _possiblemoves.push_back(std::make_pair(temp.first, temp.second));
     }
 
-    temp = _position;
+    temp = startingSquare;
 
     while(temp.first >= 0){
         temp.first -= 1;
@@ -52,7 +53,7 @@ void rook::getPossibleMoves(){
         _possiblemoves.push_back(std::make_pair(temp.first, temp.second));
     }
 
-    temp = _position;
+    temp = startingSquare;
 
     while(temp.second <= 7){
         temp.second += 1;
@@ -60,7 +61,7 @@ void rook::getPossibleMoves(){
         _possiblemoves.push_back(std::make_pair(temp.first, temp.second));
     }
 
-    temp = _position;
+    temp = startingSquare;
 
     while(temp.second >= 0){
         temp.second -= 1;

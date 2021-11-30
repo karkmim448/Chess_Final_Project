@@ -5,13 +5,15 @@
 
 class knight : public piece{
 public:
-    knight(std::pair<int, int> pos=std::make_pair(0,0));
+
+    knight(std::pair<int, int> pos, std::string s, Game* g);
+
     bool getColor();
     std::string getIcon();
     void setColor(bool);
     void setIcon(std::string);
     bool moveCheck(std::pair<int, int> endingSquare);
-    void getPossibleMoves();
+    void getPossibleMoves(std::pair<int, int> startingSquare);
 };
 
 #endif

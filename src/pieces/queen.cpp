@@ -1,7 +1,8 @@
 #include "../../header/pieces/queen.hpp"
 
-queen::queen(std::pair<int, int> pos){
+queen::queen(std::pair<int, int> pos, std::string s, Game* g){
     this->_position = pos;
+    this->_icon = s;
 }
 
 bool queen::getColor(){
@@ -30,10 +31,10 @@ bool queen::moveCheck(std::pair<int, int> endingSquare){
     }
 }
 
-void queen::getPossibleMoves(){
+void queen::getPossibleMoves(std::pair<int, int> startingSquare){
     std::pair<int, int> temp;
 
-    temp = _position;
+    temp = startingSquare;
 
     while(temp.first <= 7 && temp.second <= 7){
         temp.first += 1;
@@ -42,7 +43,7 @@ void queen::getPossibleMoves(){
         _possiblemoves.push_back(std::make_pair(temp.first, temp.second));
     }
 
-    temp = _position;
+    temp = startingSquare;
 
     while(temp.first >= 0 && temp.second >= 0){
         temp.first -= 1;
@@ -51,7 +52,7 @@ void queen::getPossibleMoves(){
         _possiblemoves.push_back(std::make_pair(temp.first, temp.second));
     }
 
-    temp = _position;
+    temp = startingSquare;
 
     while(temp.first <= 7 && temp.second >= 0){
         temp.first += 1;
@@ -60,7 +61,7 @@ void queen::getPossibleMoves(){
         _possiblemoves.push_back(std::make_pair(temp.first, temp.second));
     }
 
-    temp = _position;
+    temp = startingSquare;
     
     while(temp.first >= 0 && temp.second <- 7){
         temp.first -= 1;
@@ -75,7 +76,7 @@ void queen::getPossibleMoves(){
         _possiblemoves.push_back(std::make_pair(temp.first, temp.second));
     }
 
-    temp = _position;
+    temp = startingSquare;
 
     while(temp.first >= 0){
         temp.first -= 1;
@@ -83,7 +84,7 @@ void queen::getPossibleMoves(){
         _possiblemoves.push_back(std::make_pair(temp.first, temp.second));
     }
 
-    temp = _position;
+    temp = startingSquare;
 
     while(temp.second <= 7){
         temp.second += 1;
@@ -91,7 +92,7 @@ void queen::getPossibleMoves(){
         _possiblemoves.push_back(std::make_pair(temp.first, temp.second));
     }
 
-    temp = _position;
+    temp = startingSquare;
 
     while(temp.second >= 0){
         temp.second -= 1;

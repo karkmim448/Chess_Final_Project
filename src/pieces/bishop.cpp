@@ -1,8 +1,9 @@
 #include "../../header/pieces/bishop.hpp"
 
 
-bishop::bishop(std::pair<int, int> pos){
+bishop::bishop(std::pair<int, int> pos, std::string s, Game* g){
     this->_position = pos;
+    this->_icon = s;
 }
 
 bool bishop::getColor(){
@@ -31,10 +32,10 @@ bool bishop::moveCheck(std::pair<int, int> endingSquare){
     }
 }
 
-void bishop::getPossibleMoves(){
+void bishop::getPossibleMoves(std::pair<int, int> startingSquare){
     std::pair<int, int> temp;
 
-    temp = _position;
+    temp = startingSquare;
 
     while(temp.first <= 7 && temp.second <= 7){
         temp.first += 1;
@@ -43,7 +44,7 @@ void bishop::getPossibleMoves(){
         _possiblemoves.push_back(std::make_pair(temp.first, temp.second));
     }
 
-    temp = _position;
+    temp = startingSquare;
 
     while(temp.first >= 0 && temp.second >= 0){
         temp.first -= 1;
@@ -52,7 +53,7 @@ void bishop::getPossibleMoves(){
         _possiblemoves.push_back(std::make_pair(temp.first, temp.second));
     }
 
-    temp = _position;
+    temp = startingSquare;
 
     while(temp.first <= 7 && temp.second >= 0){
         temp.first += 1;
@@ -61,7 +62,7 @@ void bishop::getPossibleMoves(){
         _possiblemoves.push_back(std::make_pair(temp.first, temp.second));
     }
 
-    temp = _position;
+    temp = startingSquare;
     
     while(temp.first >= 0 && temp.second <- 7){
         temp.first -= 1;
