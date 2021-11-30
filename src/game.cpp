@@ -17,6 +17,8 @@ Game::Game(std::string fileName){
     int fileRow, fileColumn; //used by fin to build pairs for undoMove variables
                              //fileRow is also used as the temp variable for player turn
 
+    std::pair<int, int>* temp;
+
     WhitePieceFactory whiteFactory; //white piece factory used to generate all white pieces
     BlackPieceFactory blackFactory; //black piece factory used to generate all black pieces
 
@@ -57,13 +59,17 @@ Game::Game(std::string fileName){
     fin >> fileRow;
     fin >> fileColumn;
 
-    this->_initialSquare = &std::make_pair(fileRow, fileColumn);
+    temp->first = fileRow;
+    temp->second = fileColumn;
+    this->_initialSquare = temp;
 
     //read in destinationSquare and set it
     fin >> fileRow;
     fin >> fileColumn;
 
-    this->_destinationSquare = &std::make_pair(fileRow, fileColumn);
+    temp->first = fileRow;
+    temp->second = fileColumn;
+    this->_destinationSquare = temp;
 
     //read in intialPiece and set it
     fin >>fileInput;
@@ -241,7 +247,8 @@ void Game::load(){
 
     delete this->getInitialSquare();
     
-    initialSquare = &std::make_pair(fileRow, fileColumn);
+    initialSquare->first = fileRow;
+    initialSquare->second = fileColumn;
     this->setInitialSquare(initialSquare);
 
     //read in destination square and set it
@@ -250,7 +257,8 @@ void Game::load(){
 
     delete this->getDestinationSquare();
 
-    destinationSquare = &std::make_pair(fileRow, fileColumn);
+    destinationSquare->first = fileRow;
+    destinationSquare->second = fileColumn;
     this->setDestinationSquare(destinationSquare);
 
     //use for loop logic to read in initial piece

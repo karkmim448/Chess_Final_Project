@@ -8,9 +8,8 @@
 
 #include "square.hpp"
 #include "PieceFactory.hpp"
-#include "WhitePieceFactory.hpp"
-#include "BlackPieceFactory.hpp"
-#include "pieces/piece.hpp"
+
+class Piece;
 
 class Game{
   private:
@@ -137,5 +136,10 @@ class Game{
     */
     void undoMove();
 };
+
+
+#include "pieces/piece.hpp"
+#include "WhitePieceFactory.hpp"
+#include "BlackPieceFactory.hpp"
 
 #endif //__GAME_HPP__//

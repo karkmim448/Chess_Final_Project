@@ -1,7 +1,7 @@
 #ifndef __SQUARE_HPP__
 #define __SQUARE_HPP__
 
-#include "pieces/piece.hpp"
+class piece;
 
 class Square{
   private:
@@ -43,5 +43,7 @@ class Square{
     void setHighlight(bool highlight);
     void setPiece(piece* toBeSet);
 };
+
+#include "pieces/piece.hpp"
 
 #endif //__SQUARE_HPP__//

@@ -2,11 +2,12 @@
 #define __PIECE_FACTORY_HPP__
 
 #include <string>
-#include "pieces/piece.hpp"
+
+class Game;
+class piece;
 
 class PieceFactory{
 public:
-	PieceFactory();
 	
 	virtual piece* DrawPawn(Game*) = 0;
 	virtual piece* DrawRook(Game*) = 0;
@@ -17,5 +18,8 @@ public:
 
 
 };
+
+#include "game.hpp"
+#include "pieces/piece.hpp"
 
 #endif

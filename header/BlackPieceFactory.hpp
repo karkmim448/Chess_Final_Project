@@ -3,8 +3,8 @@
 
 #include <string>
 #include "PieceFactory.hpp"
-#include "game.hpp"
 
+class Game;
 
 class BlackPieceFactory: public PieceFactory{
 public:
@@ -21,7 +21,6 @@ public:
 
 };
 
-
-
+#include "game.hpp"
 
 #endif
