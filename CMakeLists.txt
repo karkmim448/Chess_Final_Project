@@ -11,21 +11,22 @@ project(MyWindow)
 # If the package can't be found, terminate the script
 find_package(SFML 2.5 COMPONENTS graphics REQUIRED )
 
+ADD_SUBDIRECTORY(googletest)
 
-#ADD_EXECUTABLE(test 
-#    tests/test.cpp 
-#    src/WhitePieceFactory.cpp 
-#    src/BlackPieceFactory.cpp 
-#    src/pieces/piece.cpp
-#    src/pieces/pawn.cpp 
-#    src/pieces/rook.cpp 
-#    src/pieces/bishop.cpp 
-#    src/pieces/knight.cpp 
-#    src/pieces/king.cpp 
-#    src/pieces/queen.cpp
-#    src/square.cpp
-#    src/game.cpp
-#)
+ADD_EXECUTABLE(test 
+    tests/test.cpp 
+    src/WhitePieceFactory.cpp 
+    src/BlackPieceFactory.cpp 
+    src/pieces/piece.cpp
+    src/pieces/pawn.cpp 
+    src/pieces/rook.cpp 
+    src/pieces/bishop.cpp 
+    src/pieces/knight.cpp 
+    src/pieces/king.cpp 
+    src/pieces/queen.cpp
+    src/square.cpp
+    src/game.cpp
+)
 
 # Tell the compiler where the source code is, and add it to the executable
 #add_executable(sfml-test src/main.cpp src/menu.cpp src/menu_gui.cpp src/game.cpp src/game_gui.cpp)# header/pieces/images/)

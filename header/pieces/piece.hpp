@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "../game.hpp"
+class Game;
 
 class piece{
 	private:
@@ -65,6 +65,8 @@ class piece{
 	
 		virtual void updatePossibleMoves(std::pair<int, int> position) = 0;
 };
+
+#include "../game.hpp"
 
 #endif //__PIECE_HPP__//
 
