@@ -13,10 +13,9 @@
  > * The input will be taken through the GUI, likely using the mouse to select which piece to move and where, and output will got to the same GUI. We also plan on building a main menu to use for saving/loading games in progress. 
  > * The project will provide the ability to play a game of chess against another player locally, being able to undo moves, save a game in progress, and load a game in progress. For specific games, we will need to create a user interface for seeing the board and moving pieces, determine how the user will move the pieces, create all the different chess pieces, determine legal moves (includes castling and determining whether checks/checkmates are present), and save states of the game. The entire program will be presented in a GUI and, if time permits, we will allow a player to play against a basic AI.
 
- > ## Phase II
  
 ## Class Diagram
-![image](https://user-images.githubusercontent.com/51354509/140863935-90d679ea-f794-421a-af6d-4ed8ddb1bc54.png)
+![Screenshot from 2021-11-30 12-05-52](https://user-images.githubusercontent.com/51354509/144120081-5cb4861e-46fd-4fe8-9256-394ad7a92edc.png)
 
 Link:
 https://lucid.app/lucidchart/ea02bd3d-c8e0-4026-8497-5b377b4eb6fd/edit?viewport_loc=354%2C782%2C3882%2C2089%2CHWEp-vi-RSFO&invitationId=inv_7ed6851d-aafa-4f09-bf35-9f2f46e8d252
