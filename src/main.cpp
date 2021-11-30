@@ -7,7 +7,7 @@
 
 int main(int argc, char ** argv) {
   sf::RenderWindow window(sf::VideoMode(800, 900), "Chess Dot Com");
-  window.setFramerateLimit(30);     //increasing too much will lead to high cpu usage, 30 fps should be more than enough
+  window.setFramerateLimit(15);     //increasing too much will lead to high cpu usage and other issues, 15 fps should be good, further testing may be required
 
 
 

@@ -1,5 +1,6 @@
 #include "../header/menu_gui.hpp"
 #include "../header/game_gui.hpp"
+#include "../header/game.hpp"
 
 #include "SFML/Graphics.hpp"
 #include <iostream>
@@ -39,9 +40,8 @@ void MenuGui::Run(sf::RenderWindow &window){
                 case 0:{
                 std::cout << "Play button has been pressed" << std::endl;
                 window.clear();
-
-                GameGui gameGui(window);
-
+                Game game("../Save/Default.txt");
+                GameGui gameGui(window, game);
                 break;
                 }
                 case 1:
