@@ -17,7 +17,7 @@ Game::Game(std::string fileName){
     int fileRow, fileColumn; //used by fin to build pairs for undoMove variables
                              //fileRow is also used as the temp variable for player turn
 
-    std::pair<int, int>* temp;
+    std::pair<int, int> temp;
 
     WhitePieceFactory whiteFactory; //white piece factory used to generate all white pieces
     BlackPieceFactory blackFactory; //black piece factory used to generate all black pieces
@@ -59,17 +59,17 @@ Game::Game(std::string fileName){
     fin >> fileRow;
     fin >> fileColumn;
 
-    temp->first = fileRow;
-    temp->second = fileColumn;
-    this->_initialSquare = temp;
+    temp.first = fileRow;
+    temp.second = fileColumn;
+    this->_initialSquare = &temp;
 
     //read in destinationSquare and set it
     fin >> fileRow;
     fin >> fileColumn;
 
-    temp->first = fileRow;
-    temp->second = fileColumn;
-    this->_destinationSquare = temp;
+    temp.first = fileRow;
+    temp.second = fileColumn;
+    this->_destinationSquare = &temp;
 
     //read in intialPiece and set it
     fin >>fileInput;
@@ -347,7 +347,7 @@ bool Game::movePiece(std::pair<int, int>* initialPosition, std::pair<int, int>* 
             castlingPossible = true;
         }
     }
-
+    /*
     //update undo move information
     //check if player has called undoMove prior to moveing a piece
     if(this->getSquare(*this->getInitialSquare())->getPiece() == nullptr){
@@ -359,10 +359,18 @@ bool Game::movePiece(std::pair<int, int>* initialPosition, std::pair<int, int>* 
             delete this->getInitialPiece();
         }
     }
+
     
     delete this->getInitialSquare();
     delete this->getDestinationSquare();
 
+    this->setInitialSquare(initialPosition);
+    this->setDestinationSquare(destinationSquare);
+    this->setInitialPiece(this->getSquare(*initialPosition)->getPiece());
+    this->setFinalPiece(this->getSquare(*destinationSquare)->getPiece());
+*/
+
+    
     this->setInitialSquare(initialPosition);
     this->setDestinationSquare(destinationSquare);
     this->setInitialPiece(this->getSquare(*initialPosition)->getPiece());
@@ -434,6 +442,7 @@ bool Game::movePiece(std::pair<int, int>* initialPosition, std::pair<int, int>* 
         this->getSquare(possibleMoves->at(i))->setHighlight(0);
     }
 
+    this->setPlayerTurn(!this->getPlayerTurn());
     return true;
 }
 
@@ -502,7 +511,7 @@ piece* Game::pieceBuilder(std::string code, PieceFactory* factory){
     }
 
     else if(code.at(1) == 'h'){ //knight branch
-        output =  factory->DrawRook(this);
+        output =  factory->DrawKnight(this);
     }
 
     else if(code.at(1) == 'b'){ //bishop branch

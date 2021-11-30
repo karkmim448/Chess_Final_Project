@@ -7,7 +7,7 @@
 
 MenuGui::MenuGui(sf::RenderWindow &window){
 	window.clear();
-    Run(window);
+  Run(window);
 
 }
 
@@ -40,13 +40,17 @@ void MenuGui::Run(sf::RenderWindow &window){
                 case 0:{
                 std::cout << "Play button has been pressed" << std::endl;
                 window.clear();
-                Game game("../Save/Default.txt");
-                GameGui gameGui(window, game);
+                //Game game("../Save/Default.txt");
+                GameGui gameGui(window, "../Save/Default.txt");
                 break;
                 }
-                case 1:
+                case 1:{
                 std::cout << "Load button has been pressed" << std::endl;
+                window.clear();
+                GameGui gameGui(window, "../Save/Save.txt");
                 break;
+                }
+                
                 case 2:
                 window.close();
                 break;

@@ -31,7 +31,7 @@ ADD_EXECUTABLE(test
 # Tell the compiler where the source code is, and add it to the executable
 #add_executable(sfml-test src/main.cpp src/menu.cpp src/menu_gui.cpp src/game.cpp src/game_gui.cpp)# header/pieces/images/)
 #add_executable(sfml-test src/main.cpp src/menu.cpp src/menu_gui.cpp src/game_gui.cpp)# header/pieces/images/)
-add_executable(sfml-test 
+add_executable(chess 
     src/pieces/piece.cpp
     src/main.cpp 
     src/menu.cpp 
@@ -50,7 +50,8 @@ add_executable(sfml-test
 
 )
 
-
-
 # Add the following SFML module to the application:
-target_link_libraries(sfml-test sfml-graphics)
+target_link_libraries(chess sfml-graphics)
+
+TARGET_LINK_LIBRARIES(test gtest)
+TARGET_COMPILE_DEFINITIONS(test PRIVATE gtest_disable_pthreads=ON)
