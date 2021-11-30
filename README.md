@@ -31,19 +31,19 @@ The class diagram uses the abstract factory pattern to draw black pieces and whi
  https://youtu.be/e1k1t8uioH0
  
  Menu:
- https://imgur.com/UBE6ons
+ ![Imgur Image](https://imgur.com/UBE6ons)
  
  New Game Load:
- https://imgur.com/pztGuoi
+ ![Imgur Image](https://imgur.com/pztGuoi)
  
  Loading from save:
- https://imgur.com/dUVl7aJ
+ ![Imgur Image](https://imgur.com/dUVl7aJ)
  
  Pre-Pawn Capture
- https://imgur.com/5WlFAlO
+ ![Imgur Image](https://imgur.com/5WlFAlO)
  
  Pos-Pawn Capture:
- https://imgur.com/dakwlcz
+ ![Imgur Image](https://imgur.com/dakwlcz)
 
 ## Installation/Usage
 Prerequisite installations:
