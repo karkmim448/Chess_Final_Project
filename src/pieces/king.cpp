@@ -1,90 +1,155 @@
 #include "../../header/pieces/king.hpp"
 
+king::king(): piece() {}
 
-bool king::castleCheck(){return true;}
+king::king(bool color, std::string icon, Game* game): piece(color, icon, game) {}
 
-king::king(std::pair<int, int> pos){
-    this->_position = pos;
-}
+king::~king() {}
 
-bool king::getColor(){
-    return this->_color;
-}
-
-std::string king::getIcon(){
-    return this->_icon;
-}
-void king::setColor(bool b){
-    this->_color = b;
-}
-
-void king::setIcon(std::string s){
-    this->_icon = s;
-}
-
-bool king::moveCheck(std::pair<int, int> endingSquare){
-    for(int i = 0; i < _possiblemoves.size(); i++){
-        if(_possiblemoves.at(i) == endingSquare){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-}
-
-void king::getPossibleMoves(){
+void king::updatePossibleMoves(std::pair<int, int> position){
     std::pair<int, int> temp;
 
-    temp = _position;
+    //clear possible moves
+    this->getPossibleMoves()->clear();
 
-    //really terrible brute force implementation
-    if(temp.first == 0 && temp.second == 0){
-        _possiblemoves.push_back(std::make_pair(temp.first + 1, temp.second));
-        _possiblemoves.push_back(std::make_pair(temp.first + 1, temp.second + 1));
-        _possiblemoves.push_back(std::make_pair(temp.first, temp.second + 1));    
+    //cover forward case
+    temp = std::make_pair(position.first - 1, position.second);
+
+    if(this->getGame()->getSquare(temp)->getPiece() == nullptr || this->getGame()->getSquare(temp)->getPiece()->getColor() != this->getColor()){
+        this->getPossibleMoves()->push_back(temp);
     }
-    else if(temp.first == 7 && temp.second == 7){
-        _possiblemoves.push_back(std::make_pair(temp.first - 1, temp.second));
-        _possiblemoves.push_back(std::make_pair(temp.first - 1, temp.second - 1));
-        _possiblemoves.push_back(std::make_pair(temp.first, temp.second - 1));
+
+    //cover forward right case
+    temp = std::make_pair(position.first - 1, position.second + 1);
+
+    if(this->getGame()->getSquare(temp)->getPiece() == nullptr || this->getGame()->getSquare(temp)->getPiece()->getColor() != this->getColor()){
+        this->getPossibleMoves()->push_back(temp);
     }
-    else if(temp.first == 0 && temp.second > 0 && temp.second < 7){
-        _possiblemoves.push_back(std::make_pair(temp.first, temp.second - 1));
-        _possiblemoves.push_back(std::make_pair(temp.first, temp.second + 1));
-        _possiblemoves.push_back(std::make_pair(temp.first + 1, temp.second - 1));
-        _possiblemoves.push_back(std::make_pair(temp.first + 1, temp.second));
-        _possiblemoves.push_back(std::make_pair(temp.first + 1, temp.second + 1));
+    
+    //cover right case
+    temp = std::make_pair(position.first, position.second + 1);
+
+    if(this->getGame()->getSquare(temp)->getPiece() == nullptr || this->getGame()->getSquare(temp)->getPiece()->getColor() != this->getColor()){
+        this->getPossibleMoves()->push_back(temp);
     }
-    else if(temp.first == 7 && temp.second > 0 && temp.second < 7){
-        _possiblemoves.push_back(std::make_pair(temp.first, temp.second - 1));
-        _possiblemoves.push_back(std::make_pair(temp.first, temp.second + 1));
-        _possiblemoves.push_back(std::make_pair(temp.first - 1, temp.second - 1));
-        _possiblemoves.push_back(std::make_pair(temp.first - 1, temp.second));
-        _possiblemoves.push_back(std::make_pair(temp.first - 1, temp.second + 1));
+    
+    //cover backward right case
+    temp = std::make_pair(position.first + 1, position.second + 1);
+
+    if(this->getGame()->getSquare(temp)->getPiece() == nullptr || this->getGame()->getSquare(temp)->getPiece()->getColor() != this->getColor()){
+        this->getPossibleMoves()->push_back(temp);
     }
-    else if(temp.second == 0 && temp.first > 0 && temp.first < 7){
-        _possiblemoves.push_back(std::make_pair(temp.first - 1, temp.second));
-        _possiblemoves.push_back(std::make_pair(temp.first + 1, temp.second));
-        _possiblemoves.push_back(std::make_pair(temp.first - 1, temp.second + 1));
-        _possiblemoves.push_back(std::make_pair(temp.first, temp.second + 1));
-        _possiblemoves.push_back(std::make_pair(temp.first + 1, temp.second + 1));
+    
+    //cover backward case
+    temp = std::make_pair(position.first + 1, position.second);
+
+    if(this->getGame()->getSquare(temp)->getPiece() == nullptr || this->getGame()->getSquare(temp)->getPiece()->getColor() != this->getColor()){
+        this->getPossibleMoves()->push_back(temp);
     }
-    else if(temp.second == 7 && temp.first > 0 && temp.first < 7){
-        _possiblemoves.push_back(std::make_pair(temp.first - 1, temp.second));
-        _possiblemoves.push_back(std::make_pair(temp.first + 1, temp.second));
-        _possiblemoves.push_back(std::make_pair(temp.first - 1, temp.second - 1));
-        _possiblemoves.push_back(std::make_pair(temp.first, temp.second - 1));
-        _possiblemoves.push_back(std::make_pair(temp.first + 1, temp.second - 1));
+    
+    //cover backward left case
+    temp = std::make_pair(position.first + 1, position.second - 1);
+
+    if(this->getGame()->getSquare(temp)->getPiece() == nullptr || this->getGame()->getSquare(temp)->getPiece()->getColor() != this->getColor()){
+        this->getPossibleMoves()->push_back(temp);
     }
-    else{
-        _possiblemoves.push_back(std::make_pair(temp.first - 1, temp.second - 1));
-        _possiblemoves.push_back(std::make_pair(temp.first - 1, temp.second));
-        _possiblemoves.push_back(std::make_pair(temp.first - 1, temp.second + 1));
-        _possiblemoves.push_back(std::make_pair(temp.first, temp.second - 1));
-        _possiblemoves.push_back(std::make_pair(temp.first, temp.second + 1));
-        _possiblemoves.push_back(std::make_pair(temp.first + 1, temp.second - 1));
-        _possiblemoves.push_back(std::make_pair(temp.first + 1, temp.second));
-        _possiblemoves.push_back(std::make_pair(temp.first + 1, temp.second + 1));
+    
+    //cover left case
+    temp = std::make_pair(position.first, position.second - 1);
+
+    if(this->getGame()->getSquare(temp)->getPiece() == nullptr || this->getGame()->getSquare(temp)->getPiece()->getColor() != this->getColor()){
+        this->getPossibleMoves()->push_back(temp);
+    }
+    
+    //cover left forward case
+    temp = std::make_pair(position.first - 1, position.second - 1);
+
+    if(this->getGame()->getSquare(temp)->getPiece() == nullptr || this->getGame()->getSquare(temp)->getPiece()->getColor() != this->getColor()){
+        this->getPossibleMoves()->push_back(temp);
+    }
+    
+    //castling requires the king to have not moved
+    if (!this->getHasMoved()){
+        bool canCastle = true;
+
+        //cover king side castle case
+        temp = std::make_pair(position.first, position.second + 2);
+
+        //check for bounds of board
+        if(temp.second <= 7){
+            //check to see if squares are empty besides corner
+            for(int i = position.second + 1; i < 7; i++){
+                if(this->getGame()->getSquare(std::make_pair(position.first, i))->getPiece() != nullptr){
+                    canCastle = false;
+                }
+            }
+
+            if(canCastle){    
+                //check for piece in king side corner
+                if(this->getGame()->getSquare(std::make_pair(temp.first, 7))->getPiece() != nullptr && this->getGame()->getSquare(std::make_pair(temp.first, 7))->getPiece()->getColor() != this->getColor()){
+                    //check if piece in corner is a rook
+                    if(this->getColor()){ //white king
+                        if (this->getGame()->getSquare(std::make_pair(temp.first, 7))->getPiece()->getIcon() == "images/white_rook.png"){
+                            //check if rook has moved
+                            if(!this->getGame()->getSquare(std::make_pair(temp.first, 7))->getPiece()->getHasMoved()){
+                                //castle is a legal move
+                                this->getPossibleMoves()->push_back(temp);
+                            }
+                        }
+                    }
+
+                    else{ //black king
+                        if (this->getGame()->getSquare(std::make_pair(temp.first, 7))->getPiece()->getIcon() == "images/black_rook.png"){
+                            //check if rook has moved
+                            if(!this->getGame()->getSquare(std::make_pair(temp.first, 7))->getPiece()->getHasMoved()){
+                                //castle is a legal move
+                                this->getPossibleMoves()->push_back(temp);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        canCastle = true;
+
+        //cover queen side castle case
+        temp = std::make_pair(position.first, position.second - 2);
+
+        //check for bounds of board
+        if(temp.second >= 0){
+            //check to see if squares are empty besides corner
+            for(int i = position.second - 1; i > 0; i--){
+                if(this->getGame()->getSquare(std::make_pair(position.first, i))->getPiece() != nullptr){
+                    canCastle = false;
+                }
+            }
+
+            if(canCastle){    
+                //check for piece in queen side corner
+                if(this->getGame()->getSquare(std::make_pair(temp.first, 7))->getPiece() != nullptr && this->getGame()->getSquare(std::make_pair(temp.first, 0))->getPiece()->getColor() != this->getColor()){
+                    //check if piece in corner is a rook
+                    if(this->getColor()){ //white king
+                        if (this->getGame()->getSquare(std::make_pair(temp.first, 0))->getPiece()->getIcon() == "images/white_rook.png"){
+                            //check if rook has moved
+                            if(!this->getGame()->getSquare(std::make_pair(temp.first, 0))->getPiece()->getHasMoved()){
+                                //castle is a legal move
+                                this->getPossibleMoves()->push_back(temp);
+                            }
+                        }
+                    }
+
+                    else{ //black king
+                        if (this->getGame()->getSquare(std::make_pair(temp.first, 0))->getPiece()->getIcon() == "images/black_rook.png"){
+                            //check if rook has moved
+                            if(!this->getGame()->getSquare(std::make_pair(temp.first, 0))->getPiece()->getHasMoved()){
+                                //castle is a legal move
+                                this->getPossibleMoves()->push_back(temp);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

@@ -14,8 +14,6 @@ Game::Game(std::string fileName){
     std::string fileInput = "";  //stores piece codes from fin
 
     bool squareColor = true; //holds color of square, alternated whenever a square is created
-    std::pair<int, int> temp; 
-    std::pair<int, int> temp2; //holds positions to be fed to piece factories
     int fileRow, fileColumn; //used by fin to build pairs for undoMove variables
                              //fileRow is also used as the temp variable for player turn
 
@@ -32,16 +30,13 @@ Game::Game(std::string fileName){
             //fin should be iterating through the 8x8 grid of pieces stored in Save
             fin >> fileInput;
 
-            //make the position based on i and j values, i is row, j is column
-            temp2 = std::make_pair(i, j);
-
             //check what color the piece is as well as if there is even a piece there
             if(fileInput.at(0) == '+'){ //white piece branch
-                this->_board[i][j] = new Square(squareColor, this->pieceBuilder(fileInput, &whiteFactory, temp2));
+                this->_board[i][j] = new Square(squareColor, this->pieceBuilder(fileInput, &whiteFactory));
             }
 
             else if(fileInput.at(0) == '-'){ //black piece branch
-                this->_board[i][j] = new Square(squareColor, this->pieceBuilder(fileInput, &blackFactory, temp2));
+                this->_board[i][j] = new Square(squareColor, this->pieceBuilder(fileInput, &blackFactory));
             }
 
             else{   //empty square branch
@@ -64,26 +59,22 @@ Game::Game(std::string fileName){
 
     this->_initialSquare = &std::make_pair(fileRow, fileColumn);
 
-    temp = std::make_pair(fileRow, fileColumn);
-
     //read in destinationSquare and set it
     fin >> fileRow;
     fin >> fileColumn;
 
     this->_destinationSquare = &std::make_pair(fileRow, fileColumn);
 
-    temp2 = std::make_pair(fileRow, fileColumn);
-
     //read in intialPiece and set it
     fin >>fileInput;
 
     //repeat for loop logic, but only got through it once for undoMoveInitialPieceStorage
     if(fileInput.at(0) == '+'){ //white piece branch
-        this->_initialPiece = this->pieceBuilder(fileInput, &whiteFactory, temp);
+        this->_initialPiece = this->pieceBuilder(fileInput, &whiteFactory);
     }
 
     else if(fileInput.at(0) == '-'){ //black piece branch
-        this->_initialPiece = this->pieceBuilder(fileInput, &blackFactory, temp);
+        this->_initialPiece = this->pieceBuilder(fileInput, &blackFactory);
     }
 
     else{ //empty square branch
@@ -94,11 +85,11 @@ Game::Game(std::string fileName){
     fin >> fileInput;
 
     if(fileInput.at(0) == '+'){ //white piece branch
-        this->_finalPiece = this->pieceBuilder(fileInput, &whiteFactory, temp2);
+        this->_finalPiece = this->pieceBuilder(fileInput, &whiteFactory);
     }
 
     else if(fileInput.at(0) == '-'){ //black piece branch
-        this->_finalPiece = this->pieceBuilder(fileInput, &blackFactory, temp2);
+        this->_finalPiece = this->pieceBuilder(fileInput, &blackFactory);
     }
 
     else{ //empty square branch
@@ -229,11 +220,11 @@ void Game::load(){
             delete this->getSquare(std::make_pair(i, j))->getPiece();
 
             if(fileInput.at(0) == '+'){//white piece branch
-                this->getSquare(std::make_pair(i, j))->setPiece(this->pieceBuilder(fileInput, &whiteFactory, std::make_pair(i, j)));
+                this->getSquare(std::make_pair(i, j))->setPiece(this->pieceBuilder(fileInput, &whiteFactory));
             }
 
             else if(fileInput.at(0) == '-'){//black piece branch
-                this->getSquare(std::make_pair(i, j))->setPiece(this->pieceBuilder(fileInput, &blackFactory, std::make_pair(i, j)));
+                this->getSquare(std::make_pair(i, j))->setPiece(this->pieceBuilder(fileInput, &blackFactory));
             }
 
             else{ //empty square branch
@@ -266,11 +257,11 @@ void Game::load(){
     fin >> fileInput;
 
     if(fileInput.at(0) == '+'){//white piece branch
-        this->setInitialPiece(this->pieceBuilder(fileInput, &whiteFactory, *initialSquare));
+        this->setInitialPiece(this->pieceBuilder(fileInput, &whiteFactory));
     }
 
     else if(fileInput.at(0) == '-'){//black piece branch
-        this->setInitialPiece(this->pieceBuilder(fileInput, &blackFactory, *initialSquare));
+        this->setInitialPiece(this->pieceBuilder(fileInput, &blackFactory));
     }
 
     else{ //empty square branch
@@ -281,11 +272,11 @@ void Game::load(){
     fin >> fileInput;
 
     if(fileInput.at(0) == '+'){//white piece branch
-        this->setFinalPiece(this->pieceBuilder(fileInput, &whiteFactory, *initialSquare));
+        this->setFinalPiece(this->pieceBuilder(fileInput, &whiteFactory));
     }
 
     else if(fileInput.at(0) == '-'){//black piece branch
-        this->setFinalPiece(this->pieceBuilder(fileInput, &blackFactory, *initialSquare));
+        this->setFinalPiece(this->pieceBuilder(fileInput, &blackFactory));
     }
 
     else{ //empty square branch
@@ -298,12 +289,12 @@ bool Game::selectPiece(std::pair<int, int> initialPosition){
         return false;
     }
 
-    this->getSquare(initialPosition)->getPiece()->updatePossibleMoves();
+    this->getSquare(initialPosition)->getPiece()->updatePossibleMoves(initialPosition);
 
-    std::vector<std::pair<int, int>> possibleMoves = this->getSquare(initialPosition)->getPiece()->getPossibleMoves();
+    std::vector<std::pair<int, int>>* possibleMoves = this->getSquare(initialPosition)->getPiece()->getPossibleMoves();
 
-    for(int i = 0; i < possibleMoves.size(); i++){
-        this->getSquare(possibleMoves.at(i))->setHighlight(1);
+    for(int i = 0; i < possibleMoves->size(); i++){
+        this->getSquare(possibleMoves->at(i))->setHighlight(1);
     }
 
     return true;
@@ -350,16 +341,19 @@ bool Game::movePiece(std::pair<int, int>* initialPosition, std::pair<int, int>* 
     }
 
     //update undo move information
+    //check if player has called undoMove prior to moveing a piece
+    if(this->getSquare(*this->getInitialSquare())->getPiece() == nullptr){
+        //prevents deletion of piece that is still on the board
+        delete this->getInitialPiece();
+        delete this->getFinalPiece();
+    }
+    
     delete this->getInitialSquare();
-    this->setInitialSquare(initialPosition);
-
     delete this->getDestinationSquare();
+
+    this->setInitialSquare(initialPosition);
     this->setDestinationSquare(destinationSquare);
-
-    delete this->getInitialPiece();
     this->setInitialPiece(this->getSquare(*initialPosition)->getPiece());
-
-    delete this->getFinalPiece();
     this->setFinalPiece(this->getSquare(*destinationSquare)->getPiece());
 
     //if en-passant case is possible, cover en-passant case
@@ -418,14 +412,14 @@ bool Game::movePiece(std::pair<int, int>* initialPosition, std::pair<int, int>* 
     //call pawn promotion if necessary
     if(pawnPromotion){
         pawn* temp = static_cast<pawn*>(this->getSquare(*destinationSquare)->getPiece());
-        temp->promote();
+        temp->promote(*destinationSquare);
     }
 
     //de-highlight highlighted squares
-    std::vector<std::pair<int, int>> possibleMoves = this->getInitialPiece()->getPossibleMoves();
+    std::vector<std::pair<int, int>>* possibleMoves = this->getInitialPiece()->getPossibleMoves();
 
-    for(int i = 0; i < possibleMoves.size(); i++){
-        this->getSquare(possibleMoves.at(i))->setHighlight(0);
+    for(int i = 0; i < possibleMoves->size(); i++){
+        this->getSquare(possibleMoves->at(i))->setHighlight(0);
     }
 
     return true;
@@ -436,13 +430,13 @@ void Game::undoMove(){ //FINISHME
     //consists of moving rook and letting general case cover king movement
     if(this->getInitialPiece()->getIcon() == "images/white_king.png" || this->getInitialPiece()->getIcon() == "images/black_king.png"){
         if(this->getDestinationSquare()->second - this->getInitialSquare()->second == 2){
-            this->getSquare(std::make_pair(this->getInitialSquare()->first, this->getInitialSquare()->second + 1))->setHasMoved(0);
+            this->getSquare(std::make_pair(this->getInitialSquare()->first, this->getInitialSquare()->second + 1))->getPiece()->setHasMoved(0);
             this->getSquare(std::make_pair(this->getInitialSquare()->first, 7))->setPiece(this->getSquare(std::make_pair(this->getInitialSquare()->first, this->getInitialSquare()->second + 1))->getPiece());
             this->getSquare(std::make_pair(this->getInitialSquare()->first, this->getInitialSquare()->second + 1))->setPiece(nullptr);
         }
 
         else if(this->getDestinationSquare()->second = this->getInitialSquare()->second == -2){
-            this->getSquare(std::make_pair(this->getInitialSquare()->first, this->getInitialSquare()->second - 1))->setHasMoved(0);
+            this->getSquare(std::make_pair(this->getInitialSquare()->first, this->getInitialSquare()->second - 1))->getPiece()->setHasMoved(0);
             this->getSquare(std::make_pair(this->getInitialSquare()->first, 0))->setPiece(this->getSquare(std::make_pair(this->getInitialSquare()->first, this->getInitialSquare()->second - 1))->getPiece());
             this->getSquare(std::make_pair(this->getInitialSquare()->first, this->getInitialSquare()->second - 1))->setPiece(nullptr);
         }
@@ -454,19 +448,19 @@ void Game::undoMove(){ //FINISHME
         if(this->getDestinationSquare()->second - this->getInitialSquare()->second != 1 && this->getSquare(*this->getDestinationSquare())->getPiece() == nullptr){
             if (this->getInitialPiece()->getColor()){
                 WhitePieceFactory whiteFactory;
-                this->getSquare(std::make_pair(this->getDestinationSquare()->first + 1, this->getDestinationSquare()->second))->setPiece(whiteFactory.DrawPawn(std::make_pair(this->getDestinationSquare()->first + 1, this->getDestinationSquare()->second), this));
+                this->getSquare(std::make_pair(this->getDestinationSquare()->first + 1, this->getDestinationSquare()->second))->setPiece(whiteFactory.DrawPawn(this));
                 this->getSquare(std::make_pair(this->getDestinationSquare()->first + 1, this->getDestinationSquare()->second))->getPiece()->setHasMoved(1);
             }
 
             else{
                 BlackPieceFactory blackFactory;
-                this->getSquare(std::make_pair(this->getDestinationSquare()->first - 1, this->getDestinationSquare()->second))->setPiece(blackFactory.DrawPawn(std::make_pair(this->getDestinationSquare()->first - 1, this->getDestinationSquare()->second), this));
+                this->getSquare(std::make_pair(this->getDestinationSquare()->first - 1, this->getDestinationSquare()->second))->setPiece(blackFactory.DrawPawn(this));
                 this->getSquare(std::make_pair(this->getDestinationSquare()->first - 1, this->getDestinationSquare()->second))->getPiece()->setHasMoved(1);
             }
         }
         //cover pawn double move case
         //set pawn hasmoved variable to 0 then let general case handle pawn movement
-        if(this->getDestinationSquare()->second - this->getInitialSquare()->second == 2 || this->getDestinationSquare()->second = this->getInitialSquare()->second == -2){
+        if((this->getDestinationSquare()->second - this->getInitialSquare()->second == 2) || (this->getDestinationSquare()->second = this->getInitialSquare()->second == -2)){
             this->getInitialPiece()->setHasMoved(0);
         }
     }
@@ -477,7 +471,7 @@ void Game::undoMove(){ //FINISHME
     this->setPlayerTurn(!this->getPlayerTurn());
 }
 
-piece* Game::pieceBuilder(std::string code, PieceFactory* factory, std::pair<int, int> position){
+piece* Game::pieceBuilder(std::string code, PieceFactory* factory){
     //check what piece is at this position, build the square using said piece
     piece* output;
 
@@ -488,27 +482,27 @@ piece* Game::pieceBuilder(std::string code, PieceFactory* factory, std::pair<int
     //move to general case
 
     if(code.at(1) == 'p'){ //pawn branch
-        output = factory->DrawPawn(position, this);
+        output = factory->DrawPawn(this);
     }
 
     else if(code.at(1) == 'r'){ //rook branch
-        output = factory->DrawRook(position, this);
+        output = factory->DrawRook(this);
     }
 
     else if(code.at(1) == 'h'){ //knight branch
-        output =  factory->DrawRook(position, this);
+        output =  factory->DrawRook(this);
     }
 
     else if(code.at(1) == 'b'){ //bishop branch
-        output =  factory->DrawBishop(position, this);
+        output =  factory->DrawBishop(this);
     }
 
     else if(code.at(1) == 'q'){ //queen branch
-        output =  factory->DrawQueen(position, this);
+        output =  factory->DrawQueen(this);
     }
 
     else if(code.at(1) == 'k'){ //king branch
-        output =  factory->DrawKing(position, this);
+        output =  factory->DrawKing(this);
     }
 
     if(code.at(2) == '1'){ //check if the piece has moved, if so update hasMoved for that piece

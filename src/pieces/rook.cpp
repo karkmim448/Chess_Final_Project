@@ -1,71 +1,110 @@
 #include "../../header/pieces/rook.hpp"
 
+rook::rook(): piece() {}
 
-bool rook::castleCheck(){return true;}
+rook::rook(bool color, std::string icon, Game* game): piece(color, icon, game) {}
 
-rook::rook(std::pair<int, int> pos){
-    this->_position = pos;
-}
+rook::~rook() {}
 
-bool rook::getColor(){
-    return this->_color;
-}
+void rook::updatePossibleMoves(std::pair<int, int> position){
+    //clear possible moves
+    this->getPossibleMoves()->clear();
 
-std::string rook::getIcon(){
-    return this->_icon;
-}
-void rook::setColor(bool b){
-    this->_color = b;
-}
+    std::pair<int, int> temp; //stores position
 
-void rook::setIcon(std::string s){
-    this->_icon = s;
-}
+    //cover forward case
+    temp = std::make_pair(position.first - 1, position.second);
 
-bool rook::moveCheck(std::pair<int, int> endingSquare){
-    for(int i = 0; i < _possiblemoves.size(); i++){
-        if(_possiblemoves.at(i) == endingSquare){
-            return true;
+    while(temp.first <= 0){
+        //destination square is empty
+        if(this->getGame()->getSquare(temp)->getPiece() == nullptr){
+            this->getPossibleMoves()->push_back(temp);
+
+            temp.first = temp.first - 1;
         }
+
+        //destination square has a piece of the opposite color
+        else if(this->getGame()->getSquare(temp)->getPiece()->getColor() != this->getColor()){
+            this->getPossibleMoves()->push_back(temp);
+
+            temp = std::make_pair(-9, 9);
+        }
+
+        //destination square has a piece of the same color in it
         else{
-            return false;
+            temp = std::make_pair(-9, 9);
+        }
+    }
+
+    //cover backward case
+    temp = std::make_pair(position.first + 1, position.second);
+
+    while(temp.first >= 7){
+        //destination square is empty
+        if(this->getGame()->getSquare(temp)->getPiece() == nullptr){
+            this->getPossibleMoves()->push_back(temp);
+
+            temp.first = temp.first + 1;
+        }
+
+        //destination square has a piece of the opposite color
+        else if(this->getGame()->getSquare(temp)->getPiece()->getColor() != this->getColor()){
+            this->getPossibleMoves()->push_back(temp);
+
+            temp = std::make_pair(9, 9);
+        }
+
+        //destination square has a piece of the same color in it
+        else{
+            temp = std::make_pair(9, 9);
+        }
+    }
+
+    //cover left case
+    temp = std::make_pair(position.first, position.second - 1);
+
+    while(temp.first <= 0){
+        //destination square is empty
+        if(this->getGame()->getSquare(temp)->getPiece() == nullptr){
+            this->getPossibleMoves()->push_back(temp);
+
+            temp.second = temp.second - 1;
+        }
+
+        //destination square has a piece of the opposite color
+        else if(this->getGame()->getSquare(temp)->getPiece()->getColor() != this->getColor()){
+            this->getPossibleMoves()->push_back(temp);
+
+            temp = std::make_pair(-9, 9);
+        }
+
+        //destination square has a piece of the same color in it
+        else{
+            temp = std::make_pair(-9, 9);
+        }
+    }
+
+    //cover right case
+    temp = std::make_pair(position.first, position.second + 1);
+
+    while(temp.first >= 7){
+        //destination square is empty
+        if(this->getGame()->getSquare(temp)->getPiece() == nullptr){
+            this->getPossibleMoves()->push_back(temp);
+
+            temp.second = temp.second + 1;
+        }
+
+        //destination square has a piece of the opposite color
+        else if(this->getGame()->getSquare(temp)->getPiece()->getColor() != this->getColor()){
+            this->getPossibleMoves()->push_back(temp);
+
+            temp = std::make_pair(9, 9);
+        }
+
+        //destination square has a piece of the same color in it
+        else{
+            temp = std::make_pair(9, 9);
         }
     }
 }
-
-void rook::getPossibleMoves(){
-    std::pair<int, int> temp;
-
-    temp = _position;
-
-    while(temp.first <= 7){
-        temp.first += 1;
-
-        _possiblemoves.push_back(std::make_pair(temp.first, temp.second));
-    }
-
-    temp = _position;
-
-    while(temp.first >= 0){
-        temp.first -= 1;
-
-        _possiblemoves.push_back(std::make_pair(temp.first, temp.second));
-    }
-
-    temp = _position;
-
-    while(temp.second <= 7){
-        temp.second += 1;
-
-        _possiblemoves.push_back(std::make_pair(temp.first, temp.second));
-    }
-
-    temp = _position;
-
-    while(temp.second >= 0){
-        temp.second -= 1;
-
-        _possiblemoves.push_back(std::make_pair(temp.first, temp.second));
-    }
-}
-

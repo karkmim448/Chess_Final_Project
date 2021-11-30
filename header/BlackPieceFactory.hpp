@@ -11,12 +11,12 @@ public:
 
 	BlackPieceFactory();
 
-	piece* DrawPawn(std::pair<int, int> pos, Game*);
-	piece* DrawRook(std::pair<int, int> pos, Game*);
-	piece* DrawKing(std::pair<int, int> pos, Game*);
-	piece*  DrawKnight(std::pair<int, int> pos, Game*);
-	piece* DrawBishop(std::pair<int, int> pos, Game*);
-	piece* DrawQueen(std::pair<int, int> pos, Game*);
+	piece* DrawPawn(Game* g);
+	piece* DrawRook(Game* g);
+	piece* DrawKing(Game* g);
+	piece*  DrawKnight(Game* g);
+	piece* DrawBishop(Game* g);
+	piece* DrawQueen(Game* g);
 
 
 };
