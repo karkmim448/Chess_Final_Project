@@ -1,25 +1,19 @@
 #ifndef __ROOK_HPP__
 #define __ROOK_HPP__
 
-#include "../../header/pieces/specialmove.hpp"
 #include <utility>
 #include <string>
 
-class rook : public specialmove{
-	
-public:
-	rook(std::pair<int, int> pos=std::make_pair(0,0));
+#include "piece.hpp"
 
-	bool castleCheck();
+class rook : public piece{
+    public:
+        rook();
+	    rook(bool color, std::string icon, Game* game);
 
-	bool _hasMoved;
-		
-    bool getColor();
-    std::string getIcon();
-    void setColor(bool);
-    void setIcon(std::string);
-    bool moveCheck(std::pair<int, int> endingSquare);
-    void getPossibleMoves();
+        ~rook();
+        
+        void updatePossibleMoves(std::pair<int, int> position);
 };
 
 #endif

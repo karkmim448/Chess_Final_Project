@@ -4,15 +4,13 @@
 #include "../../header/pieces/piece.hpp"
 
 class bishop : public piece{
-public:
-    bishop(std::pair<int, int> pos=std::make_pair(0,0));
+    public:
+        bishop();
+	    bishop(bool color, std::string icon, Game* game);
 
-    bool getColor();
-    std::string getIcon();
-    void setColor(bool);
-    void setIcon(std::string);
-    bool moveCheck(std::pair<int, int> endingSquare);
-    void getPossibleMoves();	
+        ~bishop();
+        
+        void updatePossibleMoves(std::pair<int, int> position);
 };
 
 #endif

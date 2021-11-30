@@ -9,34 +9,28 @@
 
 WhitePieceFactory::WhitePieceFactory(){}
 
-piece* WhitePieceFactory::DrawPawn(std::pair<int, int> pos, Game* g ){
-    pawn* p = new pawn(pos, Game* g );
-    p->setColor(true);
+piece* WhitePieceFactory::DrawPawn(Game* g ){
+    pawn* p = new pawn(1, "images/white_pawn.png", g);
     return p;
 }
-piece* WhitePieceFactory::DrawRook(std::pair<int, int> pos, Game* g ){
-    rook* p = new rook(pos, Game* g );
-    p->setColor(true);
+piece* WhitePieceFactory::DrawRook(Game* g ){
+    rook* p = new rook(1, "images/white_rook.png", g);
     return p;
 }
-piece* WhitePieceFactory::DrawKing(std::pair<int, int> pos, Game* g ){
-    king* p = new king(pos, Game* g );
-    p->setColor(true);
+piece* WhitePieceFactory::DrawKing(Game* g ){
+    king* p = new king(1, "images/white_king.png", g);
     return p;
 }
-piece*  WhitePieceFactory::DrawKnight(std::pair<int, int> pos, Game* g ){
-    knight* p = new knight(pos, Game* g );
-    p->setColor(true);
+piece*  WhitePieceFactory::DrawKnight(Game* g ){
+    knight* p = new knight(1, "images/white_knight.png", g);
     return p;
 }
-piece* WhitePieceFactory::DrawBishop(std::pair<int, int> pos, Game* g ){
-    bishop* p = new bishop(pos, Game* g );
-    p->setColor(true);
+piece* WhitePieceFactory::DrawBishop(Game* g ){
+    bishop* p = new bishop(1, "images/white_bishop.png", g);
     return p;
 }
-piece* WhitePieceFactory::DrawQueen(std::pair<int, int> pos, Game* g ){
-    queen* p = new queen(pos, Game* g );
-    p->setColor(true);
+piece* WhitePieceFactory::DrawQueen(Game* g ){
+    queen* p = new queen(1, "images/white_queen.png", g);
     return p;
 }
 
