@@ -245,7 +245,7 @@ void Game::load(){
     fin >> fileRow;
     fin >> fileColumn;
 
-    delete this->getInitialSquare();
+    //delete this->getInitialSquare();
     
     initialSquare->first = fileRow;
     initialSquare->second = fileColumn;
@@ -255,7 +255,7 @@ void Game::load(){
     fin >> fileRow;
     fin >> fileColumn;
 
-    delete this->getDestinationSquare();
+    //delete this->getDestinationSquare();
 
     destinationSquare->first = fileRow;
     destinationSquare->second = fileColumn;

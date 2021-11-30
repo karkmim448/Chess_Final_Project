@@ -200,6 +200,7 @@ void GameGui::Run(sf::RenderWindow &window, std::string fileName){
     sf::Texture undoButtonTexture;
     sf::Texture whiteTurnTexture;
     sf::Texture blackTurnTexture;
+    sf::Texture blackSquareTexture;
     lightSquareTexture.loadFromFile("../src/pieces/images/light_square.png");
     darkSquareTexture.loadFromFile("../src/pieces/images/dark_square.png");
     whitePawnTexture.loadFromFile("../src/pieces/images/white_pawn.png");
@@ -219,6 +220,7 @@ void GameGui::Run(sf::RenderWindow &window, std::string fileName){
     undoButtonTexture.loadFromFile("../src/misc/undoButton.png");
     whiteTurnTexture.loadFromFile("../src/misc/whiteTurn.png");
     blackTurnTexture.loadFromFile("../src/misc/blackTurn.png");
+    blackSquareTexture.loadFromFile("../src/misc/blackSquare.png");
 
     std::vector<sf::Sprite> spriteVector;
     //creates piece sprites and gives them textures+pushes them onto vector for function
@@ -260,16 +262,24 @@ void GameGui::Run(sf::RenderWindow &window, std::string fileName){
     saveButton.setPosition(200.0, 800.0);
     window.draw(saveButton);
 
-    sf::Sprite undoButton;
-    undoButton.setTexture(undoButtonTexture);
-    undoButton.setPosition(400.0, 800.0);
-    window.draw(saveButton);
+    //sf::Sprite undoButton;
+    //undoButton.setTexture(undoButtonTexture);
+    //undoButton.setPosition(400.0, 800.0);
+    //window.draw(saveButton);
 
+    sf::Sprite blackSquare;
+    blackSquare.setTexture(blackSquareTexture);
+    blackSquare.setPosition(400.0, 800.0);
+    window.draw(blackSquare);
 
 
     sf::Sprite turnButton;
-    if(game.getPlayerTurn()){turnButton.setTexture(whiteTurnTexture);}
-    else{turnButton.setTexture(blackTurnTexture);}
+    if(game.getPlayerTurn()){
+        turnButton.setTexture(whiteTurnTexture);
+    }
+    else{
+        turnButton.setTexture(blackTurnTexture);
+    }
     turnButton.setPosition(600.0, 800.0);
     window.draw(turnButton);
 
@@ -305,11 +315,17 @@ void GameGui::Run(sf::RenderWindow &window, std::string fileName){
 
         drawBoard(window, lightSquareTexture, darkSquareTexture);
 
-        if(game.getPlayerTurn()){turnButton.setTexture(whiteTurnTexture);}
+        if(game.getPlayerTurn()){
+            turnButton.setTexture(whiteTurnTexture);
+        }
+        else{
+            turnButton.setTexture(blackTurnTexture);
+        }
         window.draw(turnButton);
 
-
-
+        window.draw(loadButton);
+        window.draw(saveButton);
+window.draw(blackSquare);
 
         
 

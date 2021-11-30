@@ -175,12 +175,12 @@ void queen::updatePossibleMoves(std::pair<int, int> position){
         else if(this->getGame()->getSquare(temp)->getPiece()->getColor() != this->getColor()){
             this->getPossibleMoves()->push_back(temp);
 
-            temp = std::make_pair(-9, 9);
+            temp = std::make_pair(-9, -9);
         }
 
         //destination square has a piece of the same color in it
         else{
-            temp = std::make_pair(-9, 9);
+            temp = std::make_pair(-9, -9);
         }
     }
 
