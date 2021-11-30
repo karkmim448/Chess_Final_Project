@@ -1,34 +1,17 @@
-#pragma once
+#include "SFML/Graphics.hpp"
+#include "game.hpp"
 
-#include <memory>
-#include <string>
-#include <SFML/Graphics.hpp>
-#include "state_machine.hpp"
-//#include "AssetManager.hpp"
-//#include "InputManager.hpp"
-
-
-struct GameData
+class GameGui
 {
-	StateMachine machine;
-	sf::RenderWindow window;
-	//AssetManager assets;
-	//InputManager input;
-};
-
-typedef std::shared_ptr<GameData> GameDataRef;
-
-class GameGUI
-{
-public:
-	GameGUI(int width, int height, std::string title);
-
 private:
-	// Updates run at 60 per second.
-	const float dt = 1.0f / 60.0f;
-	sf::Clock _clock;
+    /* data */
+    sf::Sprite board[8][8];
 
-	GameDataRef _data = std::make_shared<GameData>();
+public:
+    GameGui(sf::RenderWindow &window, Game &game);
+    ~GameGui(){}
+    void Run(sf::RenderWindow &window, Game &game);
+    void drawBoard(sf::RenderWindow &window, sf::Texture &lightSquareTexture, sf::Texture &darkSquareTexture);
+    void drawPieces(sf::RenderWindow &window, Game &game, std::vector<sf::Sprite> spriteVector1);
 
-	void Run();
 };

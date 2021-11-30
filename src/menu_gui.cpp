@@ -1,5 +1,7 @@
 #include "../header/menu_gui.hpp"
-//#include "../header/game.hpp"
+#include "../header/game_gui.hpp"
+#include "../header/game.hpp"
+
 #include "SFML/Graphics.hpp"
 #include <iostream>
 
@@ -35,10 +37,13 @@ void MenuGui::Run(sf::RenderWindow &window){
               case sf::Keyboard::Return:
               switch (menu.GetPressedItem())
               {
-                case 0:
+                case 0:{
                 std::cout << "Play button has been pressed" << std::endl;
                 window.clear();
+                Game game("../Save/Default.txt");
+                GameGui gameGui(window, game);
                 break;
+                }
                 case 1:
                 std::cout << "Load button has been pressed" << std::endl;
                 break;

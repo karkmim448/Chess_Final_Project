@@ -2,6 +2,7 @@
 # use config files
 cmake_minimum_required(VERSION 3.0)
 
+
 # Tell CMake what our project is called
 project(MyWindow)
 
@@ -9,6 +10,7 @@ project(MyWindow)
 # but only use the graphics package
 # If the package can't be found, terminate the script
 find_package(SFML 2.5 COMPONENTS graphics REQUIRED )
+
 
 ADD_EXECUTABLE(test 
     tests/test.cpp 
@@ -26,8 +28,8 @@ ADD_EXECUTABLE(test
 )
 
 # Tell the compiler where the source code is, and add it to the executable
-add_executable(sfml-test src/main.cpp)# header/pieces/images/)
-
+add_executable(sfml-test src/main.cpp src/menu.cpp src/menu_gui.cpp src/game.cpp src/game_gui.cpp)# header/pieces/images/)
+#add_executable(sfml-test src/main.cpp src/menu.cpp src/menu_gui.cpp src/game_gui.cpp)# header/pieces/images/)
 
 # Add the following SFML module to the application:
 target_link_libraries(sfml-test sfml-graphics)
