@@ -75,7 +75,10 @@ Create a test executable:
  > "./test
 
 Current implementation status is:
-- Panw works but the en-passant case does not
+- Pawn works but the en-passant case does not
 - Bishop works as intended
-- No other piece works as intended
+- Knight works as intended
+- Rook works as intended
+- Queen works as intended
+- King is non-functional
  
