@@ -341,16 +341,19 @@ bool Game::movePiece(std::pair<int, int>* initialPosition, std::pair<int, int>* 
     }
 
     //update undo move information
+    //check if player has called undoMove prior to moveing a piece
+    if(this->getSquare(*this->getInitialSquare())->getPiece() == nullptr){
+        //prevents deletion of piece that is still on the board
+        delete this->getInitialPiece();
+        delete this->getFinalPiece();
+    }
+    
     delete this->getInitialSquare();
-    this->setInitialSquare(initialPosition);
-
     delete this->getDestinationSquare();
+
+    this->setInitialSquare(initialPosition);
     this->setDestinationSquare(destinationSquare);
-
-    delete this->getInitialPiece();
     this->setInitialPiece(this->getSquare(*initialPosition)->getPiece());
-
-    delete this->getFinalPiece();
     this->setFinalPiece(this->getSquare(*destinationSquare)->getPiece());
 
     //if en-passant case is possible, cover en-passant case
