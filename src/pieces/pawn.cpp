@@ -42,6 +42,23 @@ void pawn::updatePossibleMoves(std::pair<int, int> position){
                 this->getPossibleMoves()->push_back(std::make_pair(position.first - 1, position.second + 1));
             }
         }
+
+        //check if last move was a pawn for en-passant case
+        if(this->getGame()->getInitialPiece()->getIcon() == "images/black_pawn.png"){
+            //check left en-passant case
+            if((this->getGame()->getSquare(std::make_pair(position.first, position.second - 1))->getPiece() != nullptr) && (this->getGame()->getSquare(std::make_pair(position.first, position.second - 1))->getPiece()->getIcon() == "images/black_pawn.png")){
+                if(this->getGame()->getInitialSquare()->first == position.first - 2 && this->getGame()->getInitialSquare()->second == position.second - 1){
+                    this->getPossibleMoves()->push_back(std::make_pair(position.first - 1, position.second - 1));
+                }
+            }
+
+            //check right en-passant case
+            if((this->getGame()->getSquare(std::make_pair(position.first, position.second + 1))->getPiece() != nullptr) && (this->getGame()->getSquare(std::make_pair(position.first, position.second + 1))->getPiece()->getIcon() == "images/black_pawn.png")){
+                if(this->getGame()->getInitialSquare()->first == position.first - 2 && this->getGame()->getInitialSquare()->second == position.second + 1){
+                    this->getPossibleMoves()->push_back(std::make_pair(position.first - 1, position.second + 1));
+                }
+            }
+        }
     }
 
     else{ //black piece branch
@@ -73,6 +90,23 @@ void pawn::updatePossibleMoves(std::pair<int, int> position){
             //check of that piece is a black piece
             if(this->getGame()->getSquare(std::make_pair(position.first + 1, position.second + 1))->getPiece()->getColor() != this->getColor()){
                 this->getPossibleMoves()->push_back(std::make_pair(position.first + 1, position.second + 1));
+            }
+        }
+
+        //check if last move was a pawn for en-passant case
+        if(this->getGame()->getInitialPiece()->getIcon() == "images/white_pawn.png"){
+            //check left en-passant case
+            if((this->getGame()->getSquare(std::make_pair(position.first, position.second - 1))->getPiece() != nullptr) && (this->getGame()->getSquare(std::make_pair(position.first, position.second - 1))->getPiece()->getIcon() == "images/white_pawn.png")){
+                if(this->getGame()->getInitialSquare()->first == position.first + 2 && this->getGame()->getInitialSquare()->second == position.second - 1){
+                    this->getPossibleMoves()->push_back(std::make_pair(position.first + 1, position.second - 1));
+                }
+            }
+
+            //check right en-passant case
+            if((this->getGame()->getSquare(std::make_pair(position.first, position.second + 1))->getPiece() != nullptr) && (this->getGame()->getSquare(std::make_pair(position.first, position.second + 1))->getPiece()->getIcon() == "images/white_pawn.png")){
+                if(this->getGame()->getInitialSquare()->first == position.first + 2 && this->getGame()->getInitialSquare()->second == position.second + 1){
+                    this->getPossibleMoves()->push_back(std::make_pair(position.first + 1, position.second + 1));
+                }
             }
         }
     }
