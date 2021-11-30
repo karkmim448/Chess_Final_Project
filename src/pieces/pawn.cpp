@@ -44,7 +44,7 @@ void pawn::updatePossibleMoves(std::pair<int, int> position){
         }
 
         //check if last move was a pawn for en-passant case
-        if(this->getGame()->getInitialPiece()->getIcon() == "images/black_pawn.png"){
+        if(this->getGame()->getInitialPiece() != nullptr && this->getGame()->getInitialPiece()->getIcon() == "images/black_pawn.png"){
             //check left en-passant case
             if((this->getGame()->getSquare(std::make_pair(position.first, position.second - 1))->getPiece() != nullptr) && (this->getGame()->getSquare(std::make_pair(position.first, position.second - 1))->getPiece()->getIcon() == "images/black_pawn.png")){
                 if(this->getGame()->getInitialSquare()->first == position.first - 2 && this->getGame()->getInitialSquare()->second == position.second - 1){

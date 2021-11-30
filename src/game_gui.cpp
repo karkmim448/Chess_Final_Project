@@ -5,9 +5,11 @@
 
 
 
-GameGui::GameGui(sf::RenderWindow &window, Game &game){
+
+GameGui::GameGui(sf::RenderWindow &window, std::string fileName){
+    //Game game("../Save/Default.txt");
     window.clear(sf::Color(0,0,0));
-    Run(window, game);
+    Run(window, fileName);
 }
 
 
@@ -52,66 +54,131 @@ void GameGui::drawBoard(sf::RenderWindow &window, sf::Texture &lightSquareTextur
 
 //CHECK TYPE OF PIECE NOT JUST PUT WHEREVER
 void GameGui::drawPieces(sf::RenderWindow &window, Game &game, std::vector<sf::Sprite> spriteVector1){
+
     for(int i = 0; i < 8; ++i){
             for(int j =0; j< 8; ++j){
                 //std::cout << board[i][j].getPosition().x << ", " << board[i][j].getPosition().y << std::endl;
-                std::pair<int, int> piecePair; piecePair = std::make_pair (i, j);
-                if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/black_bishop.png"){
+                std::pair<int, int> piecePair; piecePair = std::make_pair (j, i);
+                if(game.getSquare(piecePair)->getPiece() == nullptr){
+
+                }
+                //game.getSquare(piecePair)->getPiece()->getIcon();
+                else if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/black_bishop.png"){
                     spriteVector1.at(9).setPosition(100*i, 100*j);
                     window.draw(spriteVector1.at(9));
                 }
-                if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/black_king.png"){
+                else if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/black_king.png"){
                     spriteVector1.at(8).setPosition(100*i, 100*j);
                     window.draw(spriteVector1.at(8));
                 }
-                if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/black_knight.png"){
+                else if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/black_knight.png"){
                     spriteVector1.at(7).setPosition(100*i, 100*j);
                     window.draw(spriteVector1.at(7));
                 }
-                if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/black_pawn.png"){
+                else if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/black_pawn.png"){
                     spriteVector1.at(6).setPosition(100*i, 100*j);
                     window.draw(spriteVector1.at(6));
                 }
-                if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/black_queen.png"){
+                else if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/black_queen.png"){
                     spriteVector1.at(11).setPosition(100*i, 100*j);
                     window.draw(spriteVector1.at(11));
                 }
-                if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/black_rook.png"){
+                else if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/black_rook.png"){
                     spriteVector1.at(10).setPosition(100*i, 100*j);
                     window.draw(spriteVector1.at(10));
                 }
-                if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/white_bishop.png"){
+                else if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/white_bishop.png"){
                     spriteVector1.at(3).setPosition(100*i, 100*j);
                     window.draw(spriteVector1.at(3));
                 }
-                if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/white_king.png"){
+                else if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/white_king.png"){
                     spriteVector1.at(2).setPosition(100*i, 100*j);
                     window.draw(spriteVector1.at(2));
                 }
-                if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/white_knight.png"){
+                else if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/white_knight.png"){
                     spriteVector1.at(1).setPosition(100*i, 100*j);
                     window.draw(spriteVector1.at(1));
                 }
-                if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/white_pawn.png"){
+                else if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/white_pawn.png"){
                     spriteVector1.at(0).setPosition(100*i, 100*j);
                     window.draw(spriteVector1.at(0));
                 }
-                if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/white_queen.png"){
+                else if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/white_queen.png"){
                     spriteVector1.at(5).setPosition(100*i, 100*j);
                     window.draw(spriteVector1.at(5));
                 }
-                if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/white_rook.png"){
+                else if(game.getSquare(piecePair)->getPiece()->getIcon() == "images/white_rook.png"){
                     spriteVector1.at(4).setPosition(100*i, 100*j);
                     window.draw(spriteVector1.at(4));
                 }
-                if(game.getSquare(piecePair) == nullptr){
-
-                }
+                
             }
         }
 }
 
-void GameGui::Run(sf::RenderWindow &window, Game &game){
+std::pair<int, int> GameGui::movePiece(sf::RenderWindow &window, Game &game, std::pair<int, int> piecePair){
+    while(window.isOpen()){
+        for(int k = 0; k<8; ++k){
+            for (int l = 0; l < 8; ++l){
+                if(board[k][l].getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y)){
+                    if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                        std::pair<int, int> piecePair1; piecePair1 = std::make_pair (l, k);
+                        if(game.getSquare(piecePair1)->getHighlight() == true){
+                            if (game.getSquare(piecePair1)->getPiece() != nullptr && game.getSquare(piecePair1)->getPiece()->getIcon() == "images/black_king.png"){
+                                std::cout << "game over" << std::endl;
+                                gameOver("white", window);
+                                std::cout << "game over1" << std::endl;
+                            }
+                            else if (game.getSquare(piecePair1)->getPiece() != nullptr && game.getSquare(piecePair1)->getPiece()->getIcon() == "images/white_king.png"){
+                                std::cout << "game over" << std::endl;
+                                gameOver("black", window);
+                                std::cout << "game over1" << std::endl;
+                            }
+                            game.movePiece(&piecePair, &piecePair1);
+                            return piecePair1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+void GameGui::gameOver(std::string winner, sf::RenderWindow &window){
+    sf::Texture whiteWonTexture;
+    sf::Texture blackWonTexture;
+    whiteWonTexture.loadFromFile("../src/misc/whiteWon.png");
+    blackWonTexture.loadFromFile("../src/misc/blackWon.png");
+
+    sf::Sprite whiteWon;
+    sf::Sprite blackWon;
+    whiteWon.setTexture(whiteWonTexture);
+    whiteWon.setPosition(0,0);
+    blackWon.setTexture(blackWonTexture);
+    blackWon.setPosition(0,0);
+    if(winner=="white"){
+        window.clear();
+        window.draw(whiteWon);
+        window.display();
+        std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+
+
+        window.close();
+    }
+    else{
+        window.clear();
+        window.draw(blackWon);
+        window.display();
+        std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+
+
+        window.close();
+    }
+}
+
+
+void GameGui::Run(sf::RenderWindow &window, std::string fileName){
+    Game game(fileName);
     window.clear();
     //loads all textures
     sf::Texture lightSquareTexture;
@@ -182,8 +249,31 @@ void GameGui::Run(sf::RenderWindow &window, Game &game){
 
     drawBoard(window, lightSquareTexture, darkSquareTexture);
 
-    
 
+    sf::Sprite loadButton;
+    loadButton.setTexture(loadButtonTexture);
+    loadButton.setPosition(0.0, 800.0);
+    window.draw(loadButton);
+
+    sf::Sprite saveButton;
+    saveButton.setTexture(saveButtonTexture);
+    saveButton.setPosition(200.0, 800.0);
+    window.draw(saveButton);
+
+    sf::Sprite undoButton;
+    undoButton.setTexture(undoButtonTexture);
+    undoButton.setPosition(400.0, 800.0);
+    window.draw(saveButton);
+
+
+
+    sf::Sprite turnButton;
+    if(game.getPlayerTurn()){turnButton.setTexture(whiteTurnTexture);}
+    else{turnButton.setTexture(blackTurnTexture);}
+    turnButton.setPosition(600.0, 800.0);
+    window.draw(turnButton);
+
+    
     while(window.isOpen()){
         sf::Event event;
 
@@ -213,26 +303,15 @@ void GameGui::Run(sf::RenderWindow &window, Game &game){
         }
 
 
+        drawBoard(window, lightSquareTexture, darkSquareTexture);
 
-        sf::Sprite loadButton;
-        loadButton.setTexture(loadButtonTexture);
-        loadButton.setPosition(0.0, 800.0);
-        window.draw(loadButton);
-
-        sf::Sprite saveButton;
-        saveButton.setTexture(saveButtonTexture);
-        saveButton.setPosition(200.0, 800.0);
-        window.draw(saveButton);
-
-        sf::Sprite undoButton;
-        undoButton.setTexture(undoButtonTexture);
-        undoButton.setPosition(400.0, 800.0);
-        window.draw(saveButton);
-
-        sf::Sprite turnButton;
-        turnButton.setTexture(whiteTurnTexture);
-        turnButton.setPosition(600.0, 800.0);
+        if(game.getPlayerTurn()){turnButton.setTexture(whiteTurnTexture);}
         window.draw(turnButton);
+
+
+
+
+        
 
 
         //draw pieces
@@ -265,12 +344,39 @@ void GameGui::Run(sf::RenderWindow &window, Game &game){
                 if(board[i][j].getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y)){
                     if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                         std::pair<int, int> piecePair; piecePair = std::make_pair (j, i);
-                        game.selectPiece(piecePair);
-                        std::cout << " (" << i << ", " << j << ") selected" << std::endl;
+                        if(game.getSquare(piecePair)->getPiece() == nullptr){
+                            std::cout << "EMPTY SQUARE"<<std::endl;
+                        }
+                        else if(game.getPlayerTurn() && game.getSquare(piecePair)->getPiece()->getColor()){    //white=true
+                            std::cout << " (" << i << ", " << j << ") not yet selected" << std::endl;
+
+                            game.selectPiece(piecePair);
+                            std::cout << " (" << i << ", " << j << ") selected" << std::endl;
+                            //TODO  highLightSquare
+                            
+                            std::pair<int, int> destPair; 
+                            destPair = movePiece(window, game, piecePair);
+                            
+                            
+                        }
+                        else if(!game.getPlayerTurn() && !game.getSquare(piecePair)->getPiece()->getColor()){   // black=false
+                            game.selectPiece(piecePair);
+                            std::cout << " (" << i << ", " << j << ") selected" << std::endl;
+                            //TODO  highLightSquare
+                            std::pair<int, int> destPair; 
+                            destPair = movePiece(window, game, piecePair);
+                            
+                        }
+                        else{
+                            std::cout << "Not your turn!" << std::endl;
+                        }
+                        
                     }
                 }
             }
         }
+
+
 
 
 

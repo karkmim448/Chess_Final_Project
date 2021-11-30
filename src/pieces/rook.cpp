@@ -15,7 +15,7 @@ void rook::updatePossibleMoves(std::pair<int, int> position){
     //cover forward case
     temp = std::make_pair(position.first - 1, position.second);
 
-    while(temp.first <= 0){
+    while(temp.first >= 0){
         //destination square is empty
         if(this->getGame()->getSquare(temp)->getPiece() == nullptr){
             this->getPossibleMoves()->push_back(temp);
@@ -39,7 +39,7 @@ void rook::updatePossibleMoves(std::pair<int, int> position){
     //cover backward case
     temp = std::make_pair(position.first + 1, position.second);
 
-    while(temp.first >= 7){
+    while(temp.first <= 7){
         //destination square is empty
         if(this->getGame()->getSquare(temp)->getPiece() == nullptr){
             this->getPossibleMoves()->push_back(temp);
@@ -63,7 +63,7 @@ void rook::updatePossibleMoves(std::pair<int, int> position){
     //cover left case
     temp = std::make_pair(position.first, position.second - 1);
 
-    while(temp.first <= 0){
+    while(temp.second >= 0){
         //destination square is empty
         if(this->getGame()->getSquare(temp)->getPiece() == nullptr){
             this->getPossibleMoves()->push_back(temp);
@@ -87,7 +87,7 @@ void rook::updatePossibleMoves(std::pair<int, int> position){
     //cover right case
     temp = std::make_pair(position.first, position.second + 1);
 
-    while(temp.first >= 7){
+    while(temp.second <= 7){
         //destination square is empty
         if(this->getGame()->getSquare(temp)->getPiece() == nullptr){
             this->getPossibleMoves()->push_back(temp);
