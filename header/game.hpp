@@ -21,6 +21,7 @@ class Game{
       -Square member variables that need to be moved/edited are:
         -_highlight when a piece is selected but has notmoved yet and then again after the piece has moved.
         -_piece whenever a piece moves
+      -first numberis row, second number is column
     */
     Square* _board[8][8];
 
